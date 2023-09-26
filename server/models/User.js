@@ -36,7 +36,7 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 userSchema.virtual('stockCount').get(function () {
-  return this.stockData.length;
+  return this.stockDatas.length;
 });
 
 const User = model('User', userSchema);

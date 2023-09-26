@@ -1,12 +1,10 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User} = require('../models');
-// const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
     user: async (parent, { username }) => {
       return User.findOne({ username });
-      // .populate('savedBook');
     },
   },
 
@@ -35,11 +33,11 @@ const resolvers = {
       return { token, user };
     },
 
-    addStock: async (parent, { userId, stocname, price, priceChanged }) => {
+    addStock: async (parent, { userId, stockname, price, priceChanged }) => {
         return User.findOneAndUpdate(
           { _id: userId },
           {
-            $addToSet: { stockDatas: {stocname, price, priceChanged} },
+            $addToSet: { stockDatas: {stockname, price, priceChanged} },
           },
           {
             new: true,
