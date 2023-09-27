@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { ColorModeContext } from "../../theme";
 import { LoginForm } from "../form";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 
                                                                 /* ==================== COMPONENTS ==================== */
@@ -99,8 +99,8 @@ const Topbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1, delay: 2 }}
-			sx={{ padding: "1rem", height: "10vh" }}
+            transition={{ duration: 2 }}
+			sx={{ padding: "1rem" }}
 		>
 			<Box sx={{ flexGrow: 1 }}>
 				<Box
