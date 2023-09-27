@@ -1,5 +1,5 @@
-import ChartsImage from "./analyzePositions.svg";
-import Analysis from "./buildManagePortfolio.svg";
-import Notes from "./keepStockWatchlist.svg";
+import BuildManagePortfolio from "./buildManagePortfolio.svg";
+import AnalyzePositions from "./analyzePositions.svg";
+import KeepStockWatchlists from "./keepStockWatchlist.svg";
 
-export { ChartsImage, Analysis, Notes };
+export { BuildManagePortfolio, AnalyzePositions, KeepStockWatchlists };

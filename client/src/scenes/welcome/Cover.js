@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import Grid from "@mui/material/Unstable_Grid2/Grid2"; 
-import { ChartsImage, Analysis, Notes } from "../../assets/images";
+import { BuildManagePortfolio, AnalyzePositions, KeepStockWatchlists } from "../../assets/images";
 
 const FeatureInsight = ({ image, description, motionVariant }) => {
 	return (
@@ -86,18 +86,18 @@ const Cover = () => {
 				}}
 			>
 				<FeatureInsight
-					image={ChartsImage}
+					image={BuildManagePortfolio}
 					description={"Build and manage your own stock portfolio."}
 					motionVariant={coverItem}
 				/>
 				<FeatureInsight
-					image={Analysis}
+					image={AnalyzePositions}
 					description={"Analyze multiple positions at once."}
 					motionVariant={coverItem}
 				/>
 
 				<FeatureInsight
-					image={Notes}
+					image={KeepStockWatchlists}
 					description={
 						"Keep a watchlist of your most relevant stocks."
 					}
