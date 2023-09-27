@@ -9,7 +9,7 @@ import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { ColorModeContext } from "../../theme";
-import { LoginForm } from "../form";
+import { LoginMenu } from "../form";
 import { motion, AnimatePresence } from "framer-motion";
 
 
@@ -27,6 +27,7 @@ const Topbar = () => {
 
                                                                 /* ---------- Event Handlers for Topbar Menu ---------- */
     const handleProfileMenuOpen = (event) => {
+        console.log(event.currentTarget)
         setAnchorEl(event.currentTarget);
     };
 
@@ -57,7 +58,7 @@ const Topbar = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            {anchorEl && <LoginForm />}
+            {anchorEl && <LoginMenu setAnchorEl={setAnchorEl} />}
         </Menu>
     );
 
