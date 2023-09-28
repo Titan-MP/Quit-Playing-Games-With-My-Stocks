@@ -84,6 +84,8 @@ const Cover = () => {
 					backdropFilter: "blur(5px)",
 					padding: "20px"
 				}}
+				component={motion.div}
+				variants={coverContainer}
 			>
 				<FeatureInsight
 					image={BuildManagePortfolio}
@@ -95,7 +97,6 @@ const Cover = () => {
 					description={"Analyze multiple positions at once."}
 					motionVariant={coverItem}
 				/>
-
 				<FeatureInsight
 					image={KeepStockWatchlists}
 					description={
