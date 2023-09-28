@@ -14,6 +14,7 @@ const server = new ApolloServer({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+// app.use(bodyParser.json());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
@@ -21,6 +22,22 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+function isValidUser(username, password) {
+  return username === 'validUsername' && password === 'validPassword';
+}
+
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+
+  if (isValidUser(username, password)) {
+    // Authentication successful
+    res.json({ message: 'Login successful' });
+  } else {
+    // Authentication failed
+    res.status(401).json({ message: 'Authentication failed' });
+  }
 });
 
 
