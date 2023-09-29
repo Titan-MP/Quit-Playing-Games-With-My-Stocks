@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/stocks_db');
+
+module.exports = mongoose.connection;
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://pmrhymaun:Louie1010!@cluster0.sxmth7t.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://pmrhymaun:<password>@cluster0.sxmth7t.mongodb.net/?retryWrites=true&w=majority";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -26,8 +29,3 @@ async function run() {
   }
 }
 run().catch(console.dir);
-
-
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/stocks_db');
-
-module.exports = mongoose.connection;
