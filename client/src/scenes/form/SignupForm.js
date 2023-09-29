@@ -1,6 +1,6 @@
                                                                 /* =================== IMPORTS ======================= */
 import React from "react";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -55,7 +55,7 @@ const SignupForm = () => {
 		// event.preventDefault();
 		setUsername(values.username);                           
         setPassword(values.password); 
-		
+
 		try {
 			const {data} = await addUser({
 				variables: {username: values.username, password: values.password},
@@ -129,6 +129,14 @@ const SignupForm = () => {
 							error={touched.password && Boolean(errors.password)}
 							helperText={touched.password && errors.password}
 						/>
+						<Button
+							type="submit"
+							variant="contained"
+							size="large"
+							color="primary"
+						>
+							<Typography variant="body1">Submit</Typography>
+						</Button>
 					</form>
 				)}
 			</Formik>
