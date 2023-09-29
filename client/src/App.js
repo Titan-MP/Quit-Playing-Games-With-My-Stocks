@@ -1,8 +1,9 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import ParticlesBackground from "./scenes/global/ParticlesBackground";
 import Topbar from "./scenes/global/Topbar";
 import Cover from "./scenes/welcome/Cover";
-import ParticlesBackground from "./scenes/global/ParticlesBackground";
+import PortfolioOverview from "./scenes/dashboard/PortfolioOverview";
 import { LayoutGroup, motion } from "framer-motion";
 
 
@@ -31,7 +32,8 @@ function App() {
 					<div className="app">
 						<div className="content">
 							<Topbar />
-							<Cover />
+							{/* <Cover /> */}
+							<PortfolioOverview />
 						</div>
 					</div>
 				</LayoutGroup>
