@@ -23,5 +23,8 @@
   "homepage": "https://github.com/Titan-MP/Quit-Playing-Games-With-My-Stocks#readme",
   "devDependencies": {
     "concurrently": "^8.2.1"
+  },
+  "dependencies": {
+    "mongodb": "^6.1.0"
   }
 }
