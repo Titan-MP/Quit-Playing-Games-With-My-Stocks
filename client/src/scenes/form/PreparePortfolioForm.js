@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
-
+import InputAdornment from '@mui/material/InputAdornment';
 
                                                                 /* ==================== CONSTANTS ===================== */
 
@@ -65,6 +65,12 @@ const PreparePortfolioForm = () => {
                             onBlur={handleBlur}
                             error={touched.initialFunding && Boolean(errors.initialFunding)}
                             helperText={touched.initialFunding && errors.initialFunding}
+                            inputProps={{ min: "0" }} // Prevents the value from going below 0
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">$</InputAdornment>
+                ) // Adds a dollar sign as a start adornment
+              }}
                         />
                     </form>
                 )}
