@@ -40,10 +40,12 @@ const LoginForm = () => {
                                                                 /* Function to handle form submit                       */
     const handleFormSubmit = async (values) => {
         setUsername(values.username);                           /* Set username                                         */
-        setPassword(values.password);                           /* Set password                                         */
+        setPassword(values.password); 
+		console.log(values.username);
+		console.log(values.password);
 		try {
 			const {data} = await login({
-				variables: {username: username, password: password}
+				variables: {username: values.username, password: values.password}
 			});
 			Auth.login(data.login.token);
 		} catch (e) {

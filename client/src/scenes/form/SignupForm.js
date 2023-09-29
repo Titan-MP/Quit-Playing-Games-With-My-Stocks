@@ -53,11 +53,12 @@ const SignupForm = () => {
 	// };
 	const handleFormSubmit = async (values) => {
 		// event.preventDefault();
-		setUsername(values.username);                           /* Set username                                         */
+		setUsername(values.username);                           
         setPassword(values.password); 
+		
 		try {
 			const {data} = await addUser({
-				variables: {username: username, password: password},
+				variables: {username: values.username, password: values.password},
 			});
 			Auth.login(data.addUser.token);
 		} catch (e) {
