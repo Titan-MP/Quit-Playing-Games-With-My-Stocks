@@ -70,7 +70,7 @@ const Cover = () => {
 				height={"75vh"}
 			>
 				<Typography variant="h3">Welcome to</Typography>
-				<Typography variant="h1">"Application Name??"</Typography>
+				<Typography variant="h1">MockTrade</Typography>
 				<Typography variant="subtitle1">
 					Your Personal Portfolio Simulator
 				</Typography>
