@@ -7,6 +7,9 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../../utils/mutations";
+import Auth from "../../utils/auth";
 
 
                                                                 /* ==================== CONSTANTS ===================== */
@@ -23,8 +26,6 @@ const userSchema = yup.object().shape({
     username: yup.string().required("Username is required"),    /* Username is required                                 */
     password: yup.string().required("Password is required")     /* Password is required                                 */
 });
-
-
                                                                 /* ==================== COMPONENTS ==================== */
 
                                                                 /* -------------------- LOGIN FORM -------------------- */
@@ -33,12 +34,50 @@ const LoginForm = () => {
     const [username, setUsername] = useState("");               /* State variables - username                           */
     const [password, setPassword] = useState("");               /* State variables - password                           */
 
+	const [login, {error}] = useMutation(LOGIN_USER);
+
                                                                 /* ------------------ Event Handlers ------------------ */
                                                                 /* Function to handle form submit                       */
-    const handleFormSubmit = (values) => {
+    const handleFormSubmit = async (values) => {
         setUsername(values.username);                           /* Set username                                         */
         setPassword(values.password);                           /* Set password                                         */
-    };
+		try {
+			const {data} = await login({
+				variables: {username: username, password: password}
+			});
+			Auth.login(data.login.token);
+		} catch (e) {
+			console.error(e);
+		};
+		setUsername('');
+		setPassword('');
+		};
+	// const [userData, setFormState] = useState({
+	// 	username: '',
+	// 	password: '',
+	//   });
+
+	// const handleChange = (event) => {
+	// 	const { name, value } = event.target;
+
+	// 	setFormState({
+	// 	...userData,
+	// 	[name]: value,
+	// 	});
+	// };
+
+	// const handleFormSubmit = async (event) => {
+	// 	event.preventDefaut();
+	// 	try {
+	// 		const {data} = await login({
+	// 			variables: {...userData}
+	// 		});
+	// 	} catch (e) {
+	// 		console.error(e);
+	// 	};
+
+	// 	setFormState({username: '', password: ''});
+	// };
 
 	return (
 		<Formik

@@ -5,6 +5,11 @@ import { Typography } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 
+import {useMutation} from '@apollo/client';
+import { ADD_USER } from "../../utils/mutations";
+import { useState } from "react";
+import Auth from '../../utils/auth';
+
                                                                 /* ==================== CONSTANTS ===================== */
 
                                                                 /* ---------- FORMIK AND YUP CONFIGURATIONS ----------- */
@@ -26,7 +31,41 @@ const userSchema = yup.object().shape({
                                                                 /* ==================== COMPONENTS ==================== */
 
                                                                 /* -------------------- SIGNUP FORM ------------------- */
+
+
+
 const SignupForm = () => {
+
+	// const [userData, setFormState] = useState({
+	// 	username: '',
+	// 	password: '',
+	//   });
+	const [addUser, {error,data}] = useMutation(ADD_USER);
+	const [username, setUsername] = useState("");              
+    const [password, setPassword] = useState(""); 
+	// const handleChange = () => {
+	// 	const { name, value } = event.target;
+
+	// 	setFormState({
+	// 	...userData,
+	// 	[name]: value,
+	// 	});
+	// };
+	const handleFormSubmit = async (values) => {
+		// event.preventDefault();
+		setUsername(values.username);                           /* Set username                                         */
+        setPassword(values.password); 
+		try {
+			const {data} = await addUser({
+				variables: {username: username, password: password},
+			});
+			Auth.login(data.addUser.token);
+		} catch (e) {
+			console.error(e);
+		}
+		setUsername('');
+		setPassword('');
+	}
 	return (
 		<React.Fragment>
 			<Typography
@@ -39,9 +78,10 @@ const SignupForm = () => {
 			<Formik
 				initialValues={initialValues}
 				validationSchema={userSchema}
-				onSubmit={(values) => {
-					console.log(values);
-				}}
+				// onSubmit={(values) => {
+				// 	console.log(values);
+				// }}
+				onSubmit={handleFormSubmit}
 			>
 				{({
 					values,

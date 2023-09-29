@@ -5,33 +5,37 @@ const typeDefs = gql`
     _id: ID!
     username: String!
     password: String!
-    amount: Int!
-    stocks: [Stock]
+    amount: String
+    stocks: [Stock]!
   }
 
   type Stock {
     _id: ID!
-    symbol: String!
-    name: String!
-    price: Int!
-    quantity: Int!
-    user: [User]
+    symbol: String
+    name: String
+    price: Int
+    quantity: Int
+  }
+
+  type Auth {
+    token: ID!
+    user: User
   }
 
   type Query {
-    stock: [Stock]
-    user: [User]
-    stock(_id: ID!): Stock
-    user(_id: ID!): User
+    users: [User]
+    user(username: String!): User
+    me: User
   }
 
   type Mutation {
     addStock(symbol: String!, name: String!, price: Int!, quantity: Int!): Stock
-    addUser(username: String!, password: String!, amount: Int!): User
+    addUser(username: String!, password: String!): Auth
     updateStock(_id: ID!, quantity: Int!): Stock
-    updateAmount(_id: ID!, amount: Int!): User
+    updateAmount(_id: ID!, amount: String!): User
     removeStock(_id: ID!): Stock
     removeUser(_id: ID!): User
+    login(username: String!, password: String!): Auth
   }
 `;
 
