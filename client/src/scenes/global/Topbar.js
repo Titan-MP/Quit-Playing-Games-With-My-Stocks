@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { ColorModeContext } from "../../theme";
 import { LoginMenu } from "../form";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 
                                                                 /* ==================== COMPONENTS ==================== */
