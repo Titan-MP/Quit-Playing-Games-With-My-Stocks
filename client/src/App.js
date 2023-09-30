@@ -1,9 +1,9 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import Topbar from "./scenes/global/Topbar";
-import Cover from "./scenes/welcome/Cover";
 import ParticlesBackground from "./scenes/global/ParticlesBackground";
-import { LayoutGroup, motion } from "framer-motion";
+import Topbar from "./scenes/global/Topbar";
+import WelcomePage from "./scenes/welcome/WelcomePage";
+import { LayoutGroup } from "framer-motion";
 
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
 					<div className="app">
 						<div className="content">
 							<Topbar />
-							<Cover />
+							<WelcomePage />
 						</div>
 					</div>
 				</LayoutGroup>
