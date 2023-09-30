@@ -1,8 +1,23 @@
 import Grid from "@mui/material/Unstable_Grid2";
 import { Paper, Typography } from "@mui/material";
 import { motion } from "framer-motion";
+import YTDProfitLossAreaGraph from "../../components/YTDProfitLossAreaGraph";
+import BuyingPowerPieChart from "../../components/BuyingPowerPieChart";
+import { useTheme } from "@mui/material/styles";
+
+
+const PortfolioOverviewMetrics = ({ metricName, metricData }) => {
+	return (
+		<Grid item>
+			<Typography variant="h6">{metricName}</Typography>
+			<Typography variant="h4">{metricData}</Typography>
+		</Grid>
+	);
+};
 
 const PortfolioOverview = () => {
+    const theme = useTheme();
+
     const coverContainer = {
 		hidden: { opacity: 0 },
 		show: {
@@ -20,10 +35,16 @@ const PortfolioOverview = () => {
 		show: { opacity: 1 }
 	};
 
-    return (
-		<Paper>
+	return (
+		<Paper
+			variant="outlined"
+			sx={{
+				height: "100vh"
+			}}
+		>
 			<Grid
 				height={"100vh"}
+				padding={theme.spacing(2)}
 				container
 				spacing={2}
 				component={motion.div}
@@ -46,12 +67,24 @@ const PortfolioOverview = () => {
 					component={motion.div}
 					variants={coverItem}
 				>
-					<Typography variant="h6">Net Liq.</Typography>
-					<Typography variant="h4">$100,000.00</Typography>
-					<Typography variant="h6">P/L YTD</Typography>
-					<Typography variant="h4">$10,000.00</Typography>
-					<Typography variant="h6">Buying Power</Typography>
-					<Typography variant="h4">$50,000.00</Typography>
+					<Grid
+						container
+						spacing={2}
+						direction="column"
+					>
+						<PortfolioOverviewMetrics
+							metricName="Net Liq."
+							metricData="$100,000.00"
+						/>
+						<PortfolioOverviewMetrics
+							metricName="P/L YTD"
+							metricData="$10,000.00"
+						/>
+						<PortfolioOverviewMetrics
+							metricName="Buying Power"
+							metricData="$50,000.00"
+						/>
+					</Grid>
 				</Grid>
 				<Grid
 					item
@@ -59,23 +92,66 @@ const PortfolioOverview = () => {
 					sm={4}
 					component={motion.div}
 					variants={coverItem}
-				></Grid>
+				>
+					<YTDProfitLossAreaGraph
+						data={{
+							date: [
+								"Jan",
+								"Feb",
+								"Mar",
+								"Apr",
+								"May",
+								"Jun",
+								"Jul",
+								"Aug",
+								"Sep",
+								"Oct",
+								"Nov",
+								"Dec"
+							],
+							netLiqValue: [
+								101000, 103000, 106000, 110000, 115000, 121000,
+								128000, 136000, 145000, 155000, 150000, 144000
+							],
+							profitLoss: [
+								1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000,
+								9000, 10000, -5000, -6000
+							]
+						}}
+					/>
+				</Grid>
+                <Grid
+                    item
+                    xs={12}
+                    sm={4}
+                    component={motion.div}
+                    variants={coverItem}
+                >
+                    <BuyingPowerPieChart
+                        datasets= {{
+                            data: [
+                                { value: 70000, name: "Unallocated Funds" },
+                                { value: 30000, name: "Allocated Funds" }
+                            ]
+                        }}
+                    />
+                </Grid>
 				<Grid
 					item
 					xs={12}
-					sm={4}
-					component={motion.div}
-					variants={coverItem}
-				></Grid>
-				<Grid
-					item
-					xs={12}
-					sm={4}
 					component={motion.div}
 					variants={coverItem}
 				>
-                    <Typography variant="h6">Positions</Typography>
-                </Grid>
+					<Typography variant="h6">Positions</Typography>
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					component={motion.div}
+					variants={coverItem}
+				>
+					<Typography variant="h4">Watchlist</Typography>
+				</Grid>
 			</Grid>
 		</Paper>
 	);
