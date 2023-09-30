@@ -35,10 +35,38 @@ const LoginForm = () => {
 
                                                                 /* ------------------ Event Handlers ------------------ */
                                                                 /* Function to handle form submit                       */
-    const handleFormSubmit = (values) => {
-        setUsername(values.username);                           /* Set username                                         */
-        setPassword(values.password);                           /* Set password                                         */
-    };
+
+	if (!LoginForm.username) {
+		newErrors.email = "Please enter a valid username.";
+		isValid = false;
+	}
+
+	if (!LoginForm.password) {
+		newErrors.password = "Please enter a password.";
+		isValid = false;
+	}
+	setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    if (validateForm()) {
+      try {
+        const { data } = await login({
+          variables: { ...LoginForm}
+        });
+
+        auth.login(data.login.token);
+
+		setUsername("");
+		setPassword("");
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
 
 	return (
 		<Formik
@@ -77,7 +105,7 @@ const LoginForm = () => {
 							label="Username"
 							variant="outlined"
 							fullWidth
-							value={values.username}
+							value={username}
 							onChange={handleChange}
 							onBlur={handleBlur}
 							error={touched.username && Boolean(errors.username)}
@@ -88,7 +116,7 @@ const LoginForm = () => {
 							label="Password"
 							variant="outlined"
 							fullWidth
-							value={values.password}
+							value={password}
 							onChange={handleChange}
 							onBlur={handleBlur}
 							error={touched.password && Boolean(errors.password)}
