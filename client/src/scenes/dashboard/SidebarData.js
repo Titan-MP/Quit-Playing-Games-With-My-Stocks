@@ -40,7 +40,7 @@ export default function TemporaryDrawer() {
       <List>
         {['Dashboard', 'Markets', 'News'].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton href={`/${text.toLowerCase()}`}>
               <ListItemIcon>
                 {index % 2 === 0 ? <DashboardIcon /> : <StorefrontIcon />}
               </ListItemIcon>
