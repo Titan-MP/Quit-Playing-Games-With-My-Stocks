@@ -6,7 +6,10 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-
+//Import Mutation function
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../../utils/mutations";
+import Auth from "../../utils/auth";
 
 
                                                                 /* ==================== CONSTANTS ===================== */
@@ -33,12 +36,27 @@ const LoginForm = () => {
     const [username, setUsername] = useState("");               /* State variables - username                           */
     const [password, setPassword] = useState("");               /* State variables - password                           */
 
+	const [login, {error}] = useMutation(LOGIN_USER);
+
+
                                                                 /* ------------------ Event Handlers ------------------ */
                                                                 /* Function to handle form submit                       */
-    const handleFormSubmit = (values) => {
+    const handleFormSubmit = async (values) => {
         setUsername(values.username);                           /* Set username                                         */
         setPassword(values.password);                           /* Set password                                         */
-    };
+    
+		try {
+			const {data} = await login({
+				variables: {username: username, password: password}
+			});
+			Auth.login(data.login.token);
+		} catch (e) {
+			console.error(e);
+		};
+		setUsername('');
+		setPassword('');
+		
+	};
 
 	return (
 		<Formik
