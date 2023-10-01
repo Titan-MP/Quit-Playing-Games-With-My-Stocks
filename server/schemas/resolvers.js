@@ -1,28 +1,74 @@
-const { Tech, Matchup } = require('../models');
+const { User, Stock } = require('../models');
+const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
   Query: {
-    tech: async () => {
-      return Tech.find({});
-    },
-    matchups: async (parent, { _id }) => {
+    user: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
-      return Matchup.find(params);
+      return User.find(params);
     },
+    stock: async (parent, { _id }) => {
+      const params = _id ? { _id } : {};
+      return Stock.find(params);
+    }
   },
   Mutation: {
-    createMatchup: async (parent, args) => {
-      const matchup = await Matchup.create(args);
-      return matchup;
+    addUser: async (parent, { username, password, amount }) => {
+      const user = await User.create({ username, password, amount });
+      const token = signToken(user);
+      return { token, user };
     },
-    createVote: async (parent, { _id, techNum }) => {
-      const vote = await Matchup.findOneAndUpdate(
-        { _id },
-        { $inc: { [`tech${techNum}_votes`]: 1 } },
-        { new: true }
-      );
-      return vote;
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({ username });
+
+      if (!user) {
+        throw new AuthenticationError('No user found with this address');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
     },
+    addStock: async (parent, { symbol, name, price, quantity }, context) => {
+      if (symbol && name && price && quantity) {
+        const stock = await Stock.create({
+          symbol, name, price, quantity
+        });
+
+        return stock;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    removeStock: async (parent, { stockId }, context) => {
+      if (stockId) {
+        const stock = await stock.findOneAndDelete({_id: stockId});
+
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { stocks: stock._id } }
+        );
+
+        return stock;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
+    removeUser: async (parent, { userId }, context) => {
+      if (userId) {
+        const user = await user.findOneAndDelete({_id: userId});
+        return user;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
+
   },
 };
 
