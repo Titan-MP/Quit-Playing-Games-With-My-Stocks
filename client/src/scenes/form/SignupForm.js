@@ -11,14 +11,12 @@ import * as yup from "yup";
                                                                 /* Initial values for formik form                       */
 const initialValues = {
     username: "",
-    email: "",
     password: ""
 };
 
                                                                 /* Schema for yup validation                            */
 const userSchema = yup.object().shape({
     username: yup.string().required("Username is required"),
-    email: yup.string().email().required("Email is required"),
     password: yup.string().required("Password is required")
 });
 
@@ -34,7 +32,7 @@ const SignupForm = () => {
 				align="center"
 				paddingBottom="30px"
 			>
-				Sign Up Here
+				Create Credentials
 			</Typography>
 			<Formik
 				initialValues={initialValues}
@@ -63,18 +61,6 @@ const SignupForm = () => {
 							onBlur={handleBlur}
 							error={touched.username && Boolean(errors.username)}
 							helperText={touched.username && errors.username}
-						/>
-						<TextField
-							margin="dense"
-							id="email"
-							label="Email Address"
-							type="email"
-							fullWidth
-							value={values.email}
-							onChange={handleChange}
-							onBlur={handleBlur}
-							error={touched.email && Boolean(errors.email)}
-							helperText={touched.email && errors.email}
 						/>
 						<TextField
 							margin="dense"
