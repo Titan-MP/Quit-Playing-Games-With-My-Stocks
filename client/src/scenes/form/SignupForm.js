@@ -18,9 +18,7 @@ const SignupForm = ({ formValid, onFormUpdate }) => {
 																/* ---------- Formik and Yup Configurations ----------- */
 																/* Schema for yup validation                            */
 	const userSchema = yup.object({
-		username: yup
-			.string("Create a username")
-			.required("Username is required"),
+		username: yup.string().required("Username is required"),
 		password: yup.string().required("Password is required")
 	});
 
@@ -42,7 +40,7 @@ const SignupForm = ({ formValid, onFormUpdate }) => {
 				});
 				Auth.login(data.addUser.token);
 			} catch (e) {
-				console.error("Error Creating Account:" + e);
+				console.error("Error Creating Account: " + e);
 			}
 			onFormUpdate(true);
 		}
