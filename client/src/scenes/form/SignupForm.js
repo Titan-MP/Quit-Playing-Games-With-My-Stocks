@@ -13,7 +13,7 @@ import Auth from "../../utils/auth";
 
                                                                 /* -------------------- SIGNUP FORM ------------------- */
 const SignupForm = ({ formValid, onFormUpdate }) => {
-	const addUser = useMutation(ADD_USER);
+	const [addUser, {error, data}] = useMutation(ADD_USER);
 
 																/* ---------- Formik and Yup Configurations ----------- */
 																/* Schema for yup validation                            */
