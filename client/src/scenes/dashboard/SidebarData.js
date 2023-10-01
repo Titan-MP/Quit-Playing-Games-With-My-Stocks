@@ -1,35 +1,18 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import StorefrontIcon from '@mui/icons-material/Storefront';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
-export default function TemporaryDrawer() {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
+export default function TemporaryDrawer({state, setState, toggleDrawer}) {
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -38,11 +21,17 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Dashboard', 'Markets', 'News'].map((text, index) => (
+        {['Dashboard', 'Portfolio', 'News'].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton href={`/${text.toLowerCase()}`}>
+            <ListItemButton href={`/${text}`}>
               <ListItemIcon>
-                {index % 2 === 0 ? <DashboardIcon /> : <StorefrontIcon />}
+                {index % 3 === 0 ? (
+                <DashboardIcon /> 
+                ) : index % 3 === 1 ? (
+                <FolderCopyIcon />
+                ) : (
+                <NewspaperIcon />
+              )}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
@@ -51,7 +40,7 @@ export default function TemporaryDrawer() {
       </List>
       <Divider />
       <List>
-        {['Portfolio', 'Watchlist(s)'].map((text, index) => (
+        {['Watchlist(s)'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -67,9 +56,8 @@ export default function TemporaryDrawer() {
 
   return (
     <div>
-      {['left', 'right', 'top', 'bottom'].map((anchor) => (
+      {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}

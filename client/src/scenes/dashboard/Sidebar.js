@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import SidebarData from "./SidebarData"
+import TemporaryDrawer from "./SidebarData"
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -53,6 +53,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -63,6 +77,7 @@ export default function SearchAppBar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={toggleDrawer("left", true)}
           >
             <MenuIcon />
           </IconButton>
@@ -85,6 +100,12 @@ export default function SearchAppBar() {
           </Search>
         </Toolbar>
       </AppBar>
+      <TemporaryDrawer 
+      state={state} 
+      setState={setState} 
+      toggleDrawer={toggleDrawer}
+      >
+      </TemporaryDrawer>
     </Box>
   );
 }

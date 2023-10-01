@@ -4,10 +4,12 @@ import ParticlesBackground from "./scenes/global/ParticlesBackground";
 import Topbar from "./scenes/global/Topbar";
 import WelcomePage from "./scenes/welcome/WelcomePage";
 import { LayoutGroup } from "framer-motion";
+import Dashboard from "./scenes/dashboard/Dashboard";
 
 //Import Appllo Client
 import { ApolloClient, ApolloProvider, InMemoryCache,createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+
 
 const httpLink = createHttpLink({
 	uri: '/graphql',
@@ -58,7 +60,7 @@ function App() {
 					<div className="app">
 						<div className="content">
 							<Topbar />
-							<WelcomePage />
+							<WelcomePage/>
 						</div>
 					</div>
 				</LayoutGroup>
