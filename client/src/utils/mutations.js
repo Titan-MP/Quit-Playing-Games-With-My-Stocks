@@ -11,9 +11,10 @@ export const LOGIN_USER = gql`
     }
 `;
 
+// Create a new user
 export const ADD_USER = gql`
-    mutation addUser ($username: String!, $password: String! ) {
-        addUser (username: $username, password: $password) {
+    mutation addUser($username: String!, $password: String!, $amount: Int!) {
+        addUser(username: $username, password: $password, amount: $amount) {
             user {
                 _id
                 username
