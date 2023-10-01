@@ -6,7 +6,6 @@ import LoginForm from "./LoginForm";
 
 /* -------------------- LOGIN MENU -------------------- */
 const LoginMenu = (props) => {
-    console.log(props)
   /* ----------------- State Variables ------------------ */
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 

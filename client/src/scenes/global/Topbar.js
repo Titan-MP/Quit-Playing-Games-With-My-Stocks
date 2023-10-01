@@ -27,7 +27,6 @@ const Topbar = () => {
 
                                                                 /* ---------- Event Handlers for Topbar Menu ---------- */
     const handleProfileMenuOpen = (event) => {
-        console.log(event.currentTarget)
         setAnchorEl(event.currentTarget);
     };
 

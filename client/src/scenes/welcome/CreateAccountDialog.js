@@ -98,7 +98,12 @@ const DialogStepper = ({ activeStep }) => {
 }
 
                                                                 /* -------------- DIALOG NAVIGATION BAR --------------- */
-const DialogNavigation = ({ activeStep, setActiveStep, onClose }) => {
+const DialogNavigation = ({
+	activeStep,
+	setActiveStep,
+	onClose,
+	formValid
+}) => {
 	const handleBack = () => {
 		setActiveStep(activeStep - 1);
 	};
@@ -145,7 +150,10 @@ const DialogNavigation = ({ activeStep, setActiveStep, onClose }) => {
 							Back
 						</Button>
 						<Box sx={{ flex: "1 1 auto" }} />
-						<Button onClick={handleNext}>
+						<Button
+							onClick={handleNext}
+							disabled={!formValid}
+						>
 							{activeStep === accountCreationSteps.length - 1
 								? "Finish"
 								: "Next"}
@@ -158,29 +166,19 @@ const DialogNavigation = ({ activeStep, setActiveStep, onClose }) => {
 };
 
                                                                 /* -------------- DIALOG SWIPEABLE VIEW --------------- */
-const DialogSwipeView = ({ activeStep }) => {
+const DialogSwipeView = ({ activeStep, formValid, onFormUpdate }) => {
 	let progress = useMotionValue(90);
 
 	return (
 		<SwipeableViews index={activeStep}>
-			<Box
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center"
-				}}
-			>
-				<SignupForm />
-			</Box>
-			<Box
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					alignItems: "center"
-				}}
-			>
-				<PreparePortfolioForm />
-			</Box>
+			<SignupForm
+				formValid={formValid}
+				onFormUpdate={onFormUpdate}
+			/>
+			<PreparePortfolioForm
+				formValid={formValid}
+				onFormUpdate={onFormUpdate}
+			/>
 			<Box
 				sx={{
 					display: "flex",
@@ -222,6 +220,11 @@ const DialogSwipeView = ({ activeStep }) => {
 const CreateAccountDialog = ({ onOpen, onClose }) => {
 	const [open, setOpen] = useState(false);
 	const [activeStep, setActiveStep] = React.useState(0);
+	const [formValid, setFormValid] = useState(false);
+
+	const handleFormUpdate = (validity) => {
+		setFormValid(validity);
+	};
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -238,11 +241,16 @@ const CreateAccountDialog = ({ onOpen, onClose }) => {
 		>
 			<DialogContent>
 				<DialogStepper activeStep={activeStep} />
-				<DialogSwipeView activeStep={activeStep} />
+				<DialogSwipeView
+					activeStep={activeStep}
+					formValid={formValid}
+					onFormUpdate={handleFormUpdate}
+				/>
 				<DialogNavigation
 					activeStep={activeStep}
 					setActiveStep={setActiveStep}
 					onClose={onClose}
+					formValid={formValid}
 				/>
 			</DialogContent>
 		</Dialog>
