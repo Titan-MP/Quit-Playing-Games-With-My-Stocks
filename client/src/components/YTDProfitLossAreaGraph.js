@@ -3,22 +3,30 @@ import ReactECharts from "echarts-for-react";
 import * as echarts from "echarts/core";
 import { LineChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
-import { TitleComponent, TooltipComponent, GridComponent } from "echarts/components";
+import {
+	TitleComponent,
+	TooltipComponent,
+	GridComponent
+} from "echarts/components";
 import { useTheme } from "@mui/material/styles";
 
-
-echarts.use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer]);
-
+echarts.use([
+	TitleComponent,
+	TooltipComponent,
+	GridComponent,
+	LineChart,
+	CanvasRenderer
+]);
 
 const YTDProfitLossAreaGraph = ({ data }) => {
-    const theme = useTheme();
+	const theme = useTheme();
 
 	const options = {
 		title: {
 			text: "Net Liq. and P/L YTD",
-            textStyle: {
-                color: theme.palette.text.primary
-            }
+			textStyle: {
+				color: theme.palette.text.primary
+			}
 		},
 		tooltip: {
 			trigger: "axis",
@@ -30,14 +38,14 @@ const YTDProfitLossAreaGraph = ({ data }) => {
 			}
 		},
 		legend: {
-            orient: "vertical",
-            right: "right",
-            align: "right",
-            padding: [10, 100, 10, 10],
+			orient: "vertical",
+			right: "right",
+			align: "right",
+			padding: [10, 100, 10, 10],
 			data: ["Net Liq.", "P/L YTD"],
-            textStyle: {
-                color: theme.palette.text.primary
-            }
+			textStyle: {
+				color: theme.palette.text.primary
+			}
 		},
 		toolbox: {
 			feature: {
@@ -77,10 +85,7 @@ const YTDProfitLossAreaGraph = ({ data }) => {
 				},
 				data: data.profitLoss
 			}
-		],
-		tooltip: {
-			trigger: "axis"
-		}
+		]
 	};
 
 	return <ReactECharts option={options} />;
