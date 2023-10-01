@@ -2,9 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "nodemon"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,10 @@
     "apollo-server-express": "^3.12.1",
     "express": "^4.18.2",
     "graphql": "^16.8.1",
-    "mongoose": "^7.5.2"
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.1.0",
+    "mongoose": "^7.5.2",
+    "bcrypt": "^5.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

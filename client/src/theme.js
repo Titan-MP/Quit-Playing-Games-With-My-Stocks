@@ -1,8 +1,9 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
+import "@fontsource/lato";
 
 export const themeSettings = (mode) => {
-	const fontFamily = ["Source Sans Pro", "sans-serif"].join(",");
+	const fontFamily = ["Lato", "sans-serif"].join(",");
 
 	return {
 		palette: {
@@ -35,22 +36,22 @@ export const themeSettings = (mode) => {
 				fontFamily: fontFamily,
 				fontSize: 24
 			},
-      subtitle1: {
-        fontFamily: fontFamily,
-        fontSize: 20
-      },
-      subtitle2: {
-        fontFamily: fontFamily,
-        fontSize: 18
-      },
+			subtitle1: {
+				fontFamily: fontFamily,
+				fontSize: 20
+			},
+			subtitle2: {
+				fontFamily: fontFamily,
+				fontSize: 18
+			},
 			body1: {
 				fontFamily: fontFamily,
 				fontSize: 16
 			},
-      body2: {
-        fontFamily: fontFamily,
-        fontSize: 14
-      }
+			body2: {
+				fontFamily: fontFamily,
+				fontSize: 14
+			}
 		}
 	};
 };
