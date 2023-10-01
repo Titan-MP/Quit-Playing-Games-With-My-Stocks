@@ -9,10 +9,10 @@ import * as yup from "yup";
 
                                                                 /* ---------- FORMIK AND YUP CONFIGURATIONS ----------- */
                                                                 /* Initial values for formik form                       */
-const initialValues = {
-    username: "",
-    password: ""
-};
+// const initialValues = {
+//     username: "",
+//     password: ""
+// };
 
                                                                 /* Schema for yup validation                            */
 const userSchema = yup.object().shape({
@@ -35,7 +35,7 @@ const SignupForm = () => {
 				Create Credentials
 			</Typography>
 			<Formik
-				initialValues={initialValues}
+				// initialValues={initialValues}
 				validationSchema={userSchema}
 				onSubmit={(values) => {
 					console.log(values);
