@@ -1,7 +1,7 @@
                                                                 /* ===================== IMPORTS ====================== */
 
 import React, { useContext } from "react";
-import { Box, Button, IconButton, useTheme } from "@mui/material";
+import { Box, Button, IconButton, SvgIcon, useTheme } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -91,13 +91,7 @@ const Topbar = () => {
             </MenuItem>
         </Menu>
     );
-    
-    //Add function to logout
-const logoutFunction = async (e) => {
-    Auth.logout();
-}
 
-                                                                /* ----------------- Topbar Return -------------------- */
     return (
 		<Box
 			sx={{
