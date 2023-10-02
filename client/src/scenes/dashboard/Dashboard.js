@@ -1,5 +1,6 @@
 import PortfolioOverview from "./PortfolioOverview";
 import Box from "@mui/material/Box";
+import Topbar from ".././global/Topbar";
 
 const Dashboard = () => {
 	return (
@@ -10,7 +11,13 @@ const Dashboard = () => {
 				backdropFilter: "blur(5px)",
 			}}
 		>
-			<PortfolioOverview />
+			<div className="app">
+				<div className="content">
+					<Topbar/>
+					<PortfolioOverview />
+				</div>
+			</div>
+			{/* <PortfolioOverview /> */}
 		</Box>
 	);
 };

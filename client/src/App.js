@@ -9,6 +9,9 @@ import { LayoutGroup } from "framer-motion";
 import { ApolloClient, ApolloProvider, InMemoryCache,createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Dashboard from "./scenes/dashboard/Dashboard";
+
 const httpLink = createHttpLink({
 	uri: '/graphql',
   });
@@ -57,8 +60,20 @@ function App() {
 					<ParticlesBackground />
 					<div className="app">
 						<div className="content">
-							<Topbar />
-							<WelcomePage />
+							{/* <Topbar />
+							<WelcomePage /> */}
+							<Router>
+								<Routes>
+									<Route
+										path="/"
+										element={[<Topbar/>,<WelcomePage/>]}
+									/>
+									<Route
+										path="/dashboard"
+										element={<Dashboard/>}
+									/>
+								</Routes>
+							</Router>
 						</div>
 					</div>
 				</LayoutGroup>
