@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import CreateAccountDialog from "../welcome/CreateAccountDialog";
 import LoginForm from "./LoginForm";
 
 /* -------------------- LOGIN MENU -------------------- */
 const LoginMenu = (props) => {
-    console.log(props)
   /* ----------------- State Variables ------------------ */
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
