@@ -6,12 +6,12 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { ColorModeContext } from "../../theme";
 import { LoginMenu } from "../form";
 import { motion } from "framer-motion";
-
 import Auth from '../../utils/auth';
                                                                 /* ==================== COMPONENTS ==================== */
 
@@ -100,71 +100,51 @@ const logoutFunction = async (e) => {
                                                                 /* ----------------- Topbar Return -------------------- */
     return (
 		<Box
-			component={motion.div}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 2 }}
-			sx={{ padding: "1rem", backdropFilter: "blur(10px)" }}
+			sx={{
+				display: "flex",
+				justifyContent: "flex-end",
+				alignItems: "center",
+				width: "100%",
+				padding: theme.spacing(2),
+				position: "relative",
+				top: 0,
+				left: 0
+			}}
 		>
-			<Box sx={{ flexGrow: 1 }}>
-				<Box
-					sx={{
-						display: "flex",
-						justifyContent: "flex-end"
-					}}
+			<Box>
+				<IconButton
+					sx={{ marginRight: "20px" }}
+					onClick={() => colorMode.toggleColorMode()}
 				>
-					<IconButton
-						onClick={() => {
-							colorMode.toggleColorMode();
-						}}
-					>
-						{theme.palette.mode === "dark" ? (
-							<LightModeOutlinedIcon />
-						) : (
-							<DarkModeOutlinedIcon />
-						)}
-					</IconButton>
-                    {Auth.loggedIn() ? (
-                        <Button
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="primary-search-account-menu"
-                            aria-haspopup="true"
-                            color="inherit"
-                            startIcon={<LoginOutlinedIcon />}
-                            onClick={logoutFunction}
-                        >
-                            Logout
-                        </Button>
-                    ) : (
-                        <Button
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="primary-search-account-menu"
-                            aria-haspopup="true"
-                            color="inherit"
-                            startIcon={<LoginOutlinedIcon />}
-                            onClick={handleProfileMenuOpen}
-                        >
-                            Login
-                        </Button>
-                    )}
-					{/* <Button
-						size="large"
-						aria-label="account of current user"
-						aria-controls="primary-search-account-menu"
-						aria-haspopup="true"
-						color="inherit"
-						startIcon={<LoginOutlinedIcon />}
-						onClick={handleProfileMenuOpen}
-					>
-						Login
-					</Button> */}
-				</Box>
-				{renderMobileMenu}
-				{renderMenu}
+					{colorMode.colorMode === "light" ? (
+						<LightModeOutlinedIcon />
+					) : (
+						<DarkModeOutlinedIcon />
+					)}
+				</IconButton>
+				<Button
+					variant="contained"
+					color="primary"
+					sx={{
+						marginRight: "20px",
+						backgroundColor: theme.palette.primary.main,
+						"&:hover": {
+							backgroundColor: theme.palette.primary.dark
+						}
+					}}
+					onClick={
+						Auth.loggedIn() ? Auth.logout : handleProfileMenuOpen
+					}
+				>
+					{Auth.loggedIn() ? (
+						<LogoutOutlinedIcon />
+					) : (
+						<LoginOutlinedIcon />
+					)}
+				</Button>
 			</Box>
+			{renderMobileMenu}
+			{renderMenu}
 		</Box>
 	);
 };
