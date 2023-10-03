@@ -1,0 +1,27 @@
+@media screen and (max-width: 840px) {
+    .MockTradeLogo{
+        top: 25rem;
+        height: 60vh;
+        padding: 5rem;
+        right: -10vw;
+    }
+    .appName {
+        font-size: 4.5vw;
+    }
+    .summ {
+        font-size: 10vw;
+    }
+  }
+
+  .summ{
+    
+  }
+
+  .appName {
+    font-size: 1.75rem;
+    font-weight: 100;
+  }
+
+  .MockTradeLogo {
+
+  }

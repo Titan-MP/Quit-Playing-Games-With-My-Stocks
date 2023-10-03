@@ -4,7 +4,6 @@ import ParticlesBackground from "./scenes/global/ParticlesBackground";
 import Topbar from "./scenes/global/Topbar";
 import WelcomePage from "./scenes/welcome/WelcomePage";
 import { LayoutGroup } from "framer-motion";
-import Dashboard from "./scenes/dashboard/Dashboard";
 
 //Import Appllo Client
 import { ApolloClient, ApolloProvider, InMemoryCache,createHttpLink } from '@apollo/client';
@@ -77,6 +76,7 @@ function App() {
 							</Router>
 						</div>
 					</div>
+				</LayoutGroup>
 			</ThemeProvider>
 		</ColorModeContext.Provider>
 		</ApolloProvider>

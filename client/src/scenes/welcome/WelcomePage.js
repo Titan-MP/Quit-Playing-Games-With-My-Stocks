@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import FeatureInsightSection from "./FeatureInsightSection";
 import { MockTradeLogoSVG } from "../../assets/images";
+import './WelcomePage.css'
 
 const WelcomePage = () => {
 	const welcomeContainer = {
