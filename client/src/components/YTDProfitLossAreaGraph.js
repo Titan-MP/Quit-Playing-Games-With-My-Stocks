@@ -23,7 +23,7 @@ const YTDProfitLossAreaGraph = ({ data }) => {
 
 	const options = {
 		title: {
-			text: "Net Liq. and P/L YTD",
+			text: "Net Liq. and P/L",
 			textStyle: {
 				color: theme.palette.text.primary
 			}
