@@ -8,14 +8,11 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build"
+    "build": "cd client && npm run build && cd .. && npm run start"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Titan-MP/Quit-Playing-Games-With-My-Stocks.git"
-  },
-  "engines": {
-    "node": "16.20.0"
   },
   "keywords": [],
   "author": "",
