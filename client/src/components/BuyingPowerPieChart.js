@@ -30,13 +30,6 @@ const BuyingPowerPieChart = ({ datasets }) => {
 		tooltip: {
 			trigger: "item"
 		},
-		legend: {
-			top: "5%",
-			right: "right",
-            textStyle: {
-                color: theme.palette.text.primary
-            }
-		},
 		series: [
 			{
 				type: "pie",
