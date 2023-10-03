@@ -16,11 +16,6 @@ const menuItems = [
 		key: 1,
 		pageName: "Trade",
 		icon: <PaidIcon />
-	},
-	{
-		key: 2,
-		pageName: "Charts",
-		icon: <QueryStatsIcon />
 	}
 ]
 
