@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "watch": "nodemon"
+    "watch": "nodemon",
+    "start": "node server.js",
+    "seed": "node seeders/seed.js"
   },
   "keywords": [],
   "author": "",

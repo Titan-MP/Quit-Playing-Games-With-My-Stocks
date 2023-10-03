@@ -6,12 +6,20 @@ const resolvers = {
   Query: {
     user: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
-      return User.find(params);
+      return User.findOne(params).populate('stocks'); //change find to findOne
     },
     stock: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
-      return Stock.find(params);
-    }
+      return Stock.findOne(params); //change find to findOne
+    },
+
+//add me Query
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('stocks');
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
   },
   Mutation: {
     addUser: async (parent, { username, password, amount }) => {

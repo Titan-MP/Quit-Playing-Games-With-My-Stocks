@@ -6,7 +6,7 @@ const typeDefs = gql`
     username: String!
     password: String!
     amount: Int!
-    stocks: [Stock]
+    stocks: [Stock]!
   }
 
   type Stock {
@@ -28,6 +28,8 @@ const typeDefs = gql`
     users: [User]
     stock(_id: ID!): Stock
     user(_id: ID!): User
+
+    me: User
   }
 
   type Mutation {

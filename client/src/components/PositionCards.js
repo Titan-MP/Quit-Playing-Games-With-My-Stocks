@@ -10,6 +10,12 @@ import { LineChart } from "echarts/charts";
 import { GridComponent, TooltipComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 
+//import Queries
+import { useQuery } from "@apollo/client";
+import { QUERY_USER, QUERY_ME} from '../utils/queries';
+import Auth from '../utils/auth';
+
+
 echarts.use([GridComponent, TooltipComponent, LineChart, CanvasRenderer]);
 
 const PositionCard = ({ position }) => {
@@ -59,15 +65,17 @@ const PositionCard = ({ position }) => {
 				>
 					<PositionMetric
 						metricName={"Ticker"}
-						metricData={position.ticker}
+						metricData={position.username}
 					/>
 					<PositionMetric
 						metricName={"Purchase Price"}
-						metricData={position.purchasePrice}
+						// metricData={position.purchasePrice}
+						metricData={2000}
 					/>
 					<PositionMetric
 						metricName={"Quantity"}
-						metricData={position.quantity}
+						// metricData={position.quantity}
+						metricData={2}
 					/>
 				</CardContent>
 				<CardMedia
@@ -89,14 +97,14 @@ const PositionCard = ({ position }) => {
 							},
 							xAxis: {
 								type: "category",
-								data: position.threeMonthDates
+								data:["Jul", "Aug", "Sep"]
 							},
 							yAxis: {
 								type: "value"
 							},
 							series: [
 								{
-									data: position.threeMonthPrices,
+									data: [100.0, 120.0, 150.0],
 									type: "line",
 									areaStyle: {}
 								}
@@ -141,17 +149,22 @@ const PositionCards = ({ positions }) => {
 		}
 	];
 
+	const {loading, data} = useQuery(QUERY_ME);
+	const userData = data?.me || {};
+	console.log(userData);
+
 	return (
 		<Grid
 			container
 			spacing={2}
 		>
-			{examplePositions.map((position, index) => (
+			{/* {examplePositions.map((position,index) => (
 				<PositionCard
 					key={index}
 					position={position}
 				/>
-			))}
+			))} */}
+			<PositionCard position={userData}/>
 		</Grid>
 	);
 };
