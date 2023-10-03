@@ -109,43 +109,13 @@ const PositionCard = ({ position }) => {
 };
 
 const PositionCards = ({ positions }) => {
-	const examplePositions = [
-		{
-			ticker: "AAPL",
-			quantity: 10,
-			purchasePrice: 150.39,
-			threeMonthDates: ["Jul", "Aug", "Sep"],
-			threeMonthPrices: [100.0, 120.0, 150.0]
-		},
-		{
-			ticker: "TSLA",
-			quantity: 5,
-			purchasePrice: 800.47,
-			threeMonthDates: ["Jul", "Aug", "Sep"],
-			threeMonthPrices: [700.0, 750.0, 800.0]
-		},
-		{
-			ticker: "AMZN",
-			quantity: 2,
-			purchasePrice: 3500.45,
-			threeMonthDates: ["Jul", "Aug", "Sep"],
-			threeMonthPrices: [3000.0, 3250.0, 3500.0]
-		},
-		{
-			ticker: "MSFT",
-			quantity: 10,
-			purchasePrice: 300.45,
-			threeMonthDates: ["Jul", "Aug", "Sep"],
-			threeMonthPrices: [250.0, 275.0, 300.0]
-		}
-	];
 
 	return (
 		<Grid
 			container
 			spacing={2}
 		>
-			{examplePositions.map((position, index) => (
+			{positions && positions.map((position, index) => (
 				<PositionCard
 					key={index}
 					position={position}
