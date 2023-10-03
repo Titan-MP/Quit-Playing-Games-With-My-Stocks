@@ -1,8 +1,8 @@
 import PortfolioOverview from "./PortfolioOverview";
-import SearchAppBar from "./Sidebar";
 import Box from "@mui/material/Box";
+import Topbar from ".././global/Topbar";
 
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
+
 
 const Dashboard = () => {
 	return (
@@ -13,18 +13,13 @@ const Dashboard = () => {
 				backdropFilter: "blur(5px)",
 			}}
 		>
-			<Router>
-				<div className="App">
-			<SearchAppBar />
-			<Routes>
-				<Route path="/Dashboard" element={<Dashboard />}></Route>
-				<Route path="/Dashboard" element={<Dashboard />}></Route>
-				<Route path="/Dashboard" element={<Dashboard />}></Route>
-				<Route path="/Dashboard" element={<Dashboard />}></Route>
-			</Routes>
+			<div className="app">
+				<div className="content">
+					<Topbar/>
+					<PortfolioOverview />
+				</div>
 			</div>
-			</Router>
-			<PortfolioOverview />
+			{/* <PortfolioOverview /> */}
 		</Box>
 	);
 };

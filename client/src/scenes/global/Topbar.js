@@ -12,7 +12,7 @@ import { ColorModeContext } from "../../theme";
 import { LoginMenu } from "../form";
 import { motion } from "framer-motion";
 
-
+import Auth from '../../utils/auth';
                                                                 /* ==================== COMPONENTS ==================== */
 
                                                                 /* ---------------------- TOPBAR ---------------------- */
@@ -91,6 +91,11 @@ const Topbar = () => {
             </MenuItem>
         </Menu>
     );
+    
+    //Add function to logout
+const logoutFunction = async (e) => {
+    Auth.logout();
+}
 
                                                                 /* ----------------- Topbar Return -------------------- */
     return (
@@ -120,7 +125,32 @@ const Topbar = () => {
 							<DarkModeOutlinedIcon />
 						)}
 					</IconButton>
-					<Button
+                    {Auth.loggedIn() ? (
+                        <Button
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="primary-search-account-menu"
+                            aria-haspopup="true"
+                            color="inherit"
+                            startIcon={<LoginOutlinedIcon />}
+                            onClick={logoutFunction}
+                        >
+                            Logout
+                        </Button>
+                    ) : (
+                        <Button
+                            size="large"
+                            aria-label="account of current user"
+                            aria-controls="primary-search-account-menu"
+                            aria-haspopup="true"
+                            color="inherit"
+                            startIcon={<LoginOutlinedIcon />}
+                            onClick={handleProfileMenuOpen}
+                        >
+                            Login
+                        </Button>
+                    )}
+					{/* <Button
 						size="large"
 						aria-label="account of current user"
 						aria-controls="primary-search-account-menu"
@@ -130,7 +160,7 @@ const Topbar = () => {
 						onClick={handleProfileMenuOpen}
 					>
 						Login
-					</Button>
+					</Button> */}
 				</Box>
 				{renderMobileMenu}
 				{renderMenu}
