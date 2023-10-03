@@ -7,18 +7,10 @@ import { CardContent, CardMedia } from "@mui/material";
 import ReactECharts from "echarts-for-react";
 import * as echarts from "echarts/core";
 import { LineChart } from "echarts/charts";
-import {
-	GridComponent,
-	TooltipComponent
-} from "echarts/components";
+import { GridComponent, TooltipComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 
-echarts.use([
-	GridComponent,
-	TooltipComponent,
-	LineChart,
-	CanvasRenderer
-]);
+echarts.use([GridComponent, TooltipComponent, LineChart, CanvasRenderer]);
 
 const PositionCard = ({ position }) => {
 	const theme = useTheme();
@@ -57,7 +49,7 @@ const PositionCard = ({ position }) => {
 			<Card
 				sx={{
 					display: "flex",
-                    padding: theme.spacing(2),
+					padding: theme.spacing(2)
 				}}
 			>
 				<CardContent
@@ -139,6 +131,13 @@ const PositionCards = ({ positions }) => {
 			purchasePrice: 3500.45,
 			threeMonthDates: ["Jul", "Aug", "Sep"],
 			threeMonthPrices: [3000.0, 3250.0, 3500.0]
+		},
+		{
+			ticker: "MSFT",
+			quantity: 10,
+			purchasePrice: 300.45,
+			threeMonthDates: ["Jul", "Aug", "Sep"],
+			threeMonthPrices: [250.0, 275.0, 300.0]
 		}
 	];
 
@@ -147,8 +146,11 @@ const PositionCards = ({ positions }) => {
 			container
 			spacing={2}
 		>
-			{examplePositions.map((position) => (
-				<PositionCard position={position} />
+			{examplePositions.map((position, index) => (
+				<PositionCard
+					key={index}
+					position={position}
+				/>
 			))}
 		</Grid>
 	);
