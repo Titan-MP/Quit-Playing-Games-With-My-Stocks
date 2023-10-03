@@ -18,8 +18,12 @@ echarts.use([
 	CanvasRenderer
 ]);
 
-const YTDProfitLossAreaGraph = ({ data }) => {
+const YTDProfitLossAreaGraph = ({ data, height }) => {
 	const theme = useTheme();
+
+	const chartStyle = {
+		height: height
+	};
 
 	const options = {
 		title: {
@@ -74,6 +78,7 @@ const YTDProfitLossAreaGraph = ({ data }) => {
 				emphasis: {
 					focus: "series"
 				},
+				smooth: true,
 				data: data.netLiqValue
 			},
 			{
@@ -83,12 +88,13 @@ const YTDProfitLossAreaGraph = ({ data }) => {
 				emphasis: {
 					focus: "series"
 				},
+				smooth: true,
 				data: data.profitLoss
 			}
 		]
 	};
 
-	return <ReactECharts option={options} />;
+	return <ReactECharts option={options} style={chartStyle} />;
 };
 
 export default YTDProfitLossAreaGraph;
