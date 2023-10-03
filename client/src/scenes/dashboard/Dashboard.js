@@ -6,7 +6,6 @@ const Dashboard = () => {
 	return (
 		<Box
 			sx={{
-				height: "100vh",
 				backgroundColor: "transparent",
 				backdropFilter: "blur(5px)",
 			}}
