@@ -1,75 +1,94 @@
-const { User, Stock } = require('../models');
+const { Position, Stock, User, Watchlist } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 
 const resolvers = {
-  Query: {
-    user: async (parent, { _id }) => {
-      const params = _id ? { _id } : {};
-      return User.find(params);
+    Query: {
+        positions: async () => {
+            return Position.find();
+        },
+        position: async (parent, { _id }) => {
+            return Position.findOne({ _id });
+        },
+        stocks: async () => {
+            return Stock.find();
+        },
+        stock: async (parent, { _id }) => {
+            return Stock.findOne({ _id });
+        },
+        users: async () => {
+            return User.find();
+        },
+        user: async (parent, { username }) => {
+            return User.findOne({ username });
+        },
+        watchlists: async () => {
+            return Watchlist.find();
+        },
+        watchlist: async (parent, { _id }) => {
+            return Watchlist.findOne({ _id });
+        },
+        me: async (parent, args, context) => {
+            if (context.user) {
+                return User.findOne({ _id: context.user._id });
+            }
+            throw new AuthenticationError('You need to be logged in!');
+        },
     },
-    stock: async (parent, { _id }) => {
-      const params = _id ? { _id } : {};
-      return Stock.find(params);
-    }
-  },
-  Mutation: {
-    addUser: async (parent, { username, password, amount }) => {
-      const user = await User.create({ username, password, amount });
-      const token = signToken(user);
-      return { token, user };
+    Mutation: {
+        addPosition: async (parent, args) => {
+            const position = await Position.create(args);
+            return position;
+        },
+        addStock: async (parent, args) => {
+            const stock = await Stock.create(args);
+            return stock;
+        },
+        addUser: async (parent, args) => {
+            const user = await User.create(args);
+            const token = signToken(user);
+            return { token, user };
+        },
+        addWatchlist: async (parent, args) => {
+            const watchlist = await Watchlist.create(args);
+            return watchlist;
+        },
+        login: async (parent, { email, password }) => {
+            const user = await User.findOne({ email });
+            if (!user) {
+                throw new AuthenticationError('Invalid email or password!');
+            }
+            const correctPw = await user.isCorrectPassword(password);
+            if (!correctPw) {
+                throw new AuthenticationError('Invalid email or password!');
+            }
+            const token = signToken(user);
+            return { token, user };
+        },
+        addStockToWatchlist: async (parent, { watchlistId, stockId }) => {
+            return Watchlist.findOneAndUpdate(
+                { _id: watchlistId },
+                {
+                    $addToSet: { stocks: stockId },
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                }
+            );
+        },
+        removeStockFromWatchlist: async (parent, { watchlistId, stockId }) => {
+            return Watchlist.findOneAndUpdate(
+                { _id: watchlistId },
+                {
+                    $pull: { stocks: stockId },
+                },
+                {
+                    new: true,
+                }
+            );
+        },
     },
-    login: async (parent, { username, password }) => {
-      const user = await User.findOne({ username });
-
-      if (!user) {
-        throw new AuthenticationError('No user found with this address');
-      }
-
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
-      }
-
-      const token = signToken(user);
-
-      return { token, user };
-    },
-    addStock: async (parent, { symbol, name, price, quantity }, context) => {
-      if (symbol && name && price && quantity) {
-        const stock = await Stock.create({
-          symbol, name, price, quantity
-        });
-
-        return stock;
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-
-    removeStock: async (parent, { stockId }, context) => {
-      if (stockId) {
-        const stock = await stock.findOneAndDelete({_id: stockId});
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { stocks: stock._id } }
-        );
-
-        return stock;
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-
-    removeUser: async (parent, { userId }, context) => {
-      if (userId) {
-        const user = await user.findOneAndDelete({_id: userId});
-        return user;
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
-
-  },
 };
 
 module.exports = resolvers;

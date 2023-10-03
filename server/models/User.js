@@ -12,16 +12,26 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  amount: {
+  initialFunding: {
     type: Number,
     required: true,
   },
-  stocks: [
+  netLiquidation: {
+    type: Number,
+    required: false,
+  },
+  positions: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Stock'
+      ref: 'Position'
     }
   ],
+  watchlist: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Watchlist'
+    }
+  ]
 });
 
 userSchema.pre('save', async function (next) {

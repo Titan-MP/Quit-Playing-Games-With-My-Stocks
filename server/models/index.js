@@ -1,4 +1,6 @@
-const Stock = require("./stocks");
+const Position = require("./Position");
+const Stock = require("./Stock");
 const User = require("./User");
+const Watchlist = require("./Watchlist");
 
-module.exports = {Stock,User};
+module.exports = { Position, Stock, User, Watchlist };
