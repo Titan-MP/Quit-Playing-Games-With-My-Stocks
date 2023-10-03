@@ -6,6 +6,11 @@ import BuyingPowerPieChart from "../../components/BuyingPowerPieChart";
 import { useTheme } from "@mui/material/styles";
 import PositionCards from "../../components/PositionCards";
 import WatchlistCards from "../../components/WatchlistCards";
+import PortfolioMetricsData from "../../utils/portfolioMetricsCalculations";
+import Auth from "../../utils/auth";
+import { useQuery } from "@apollo/client";
+import { QUERY_USER_POSITIONS } from "../../utils/queries";
+import { useRef } from "react";
 
 // TODO: Remove this example watchlist
 const exampleWatchlist = [
@@ -62,14 +67,26 @@ const exampleWatchlist = [
 	{ symbol: "QQQ" }
 ];
 
+/**
+ * Renders a single metric for the portfolio overview.
+ * @param {Object} props - The component props.
+ * @param {string} props.metricName - The name of the metric to display.
+ * @param {string} props.metricData - The data for the metric to display.
+ * @returns {JSX.Element} - The rendered component.
+ */
 const PortfolioOverviewMetrics = ({ metricName, metricData }) => {
 	const theme = useTheme();
 
 	return (
-		<Grid item>
-			<Typography variant="h5" color={"text.secondary"}>{metricName}</Typography>
+		<Grid>
 			<Typography
-				fontSize={theme.typography.h2.fontSize}
+				variant="h6"
+				color={"text.secondary"}
+			>
+				{metricName}
+			</Typography>
+			<Typography
+				fontSize={theme.typography.h4.fontSize}
 				fontWeight="100"
 			>
 				{metricData}
@@ -78,8 +95,16 @@ const PortfolioOverviewMetrics = ({ metricName, metricData }) => {
 	);
 };
 
+/**
+ * Renders the portfolio overview page, including metrics, graphs, and position/watchlist cards.
+ * @returns {JSX.Element} The portfolio overview page.
+ */
 const PortfolioOverview = () => {
 	const theme = useTheme();
+	const { loading, data } = useQuery(QUERY_USER_POSITIONS, {
+		variables: { username: Auth.getProfile().data.username }
+	});
+	const positions = data?.user?.positions || [];
 
 	const coverContainer = {
 		hidden: { opacity: 0 },
@@ -98,9 +123,10 @@ const PortfolioOverview = () => {
 		show: { opacity: 1 }
 	};
 
+	const containerRef = useRef(null);
+
 	return (
 		<Grid
-			height={"100vh"}
 			padding={theme.spacing(2)}
 			container
 			spacing={2}
@@ -108,9 +134,13 @@ const PortfolioOverview = () => {
 			variants={coverContainer}
 			initial="hidden"
 			animate="show"
+			sx={{
+				display: "flex",
+				height: "100vh",
+				width: "100vw"
+			}}
 		>
 			<Grid
-				item
 				xs={12}
 				component={motion.div}
 				variants={coverItem}
@@ -118,9 +148,8 @@ const PortfolioOverview = () => {
 				<Typography variant="h3">Portfolio Overview</Typography>
 			</Grid>
 			<Grid
-				item
 				xs={12}
-				sm={4}
+				sm={2}
 				component={motion.div}
 				variants={coverItem}
 			>
@@ -130,25 +159,26 @@ const PortfolioOverview = () => {
 					direction="column"
 				>
 					<PortfolioOverviewMetrics
-						metricName="Net Liq."
-						metricData="$100,000.00"
+						metricName={"Net Liquidation"}
+						metricData={PortfolioMetricsData.netLiquidation}
 					/>
+
 					<PortfolioOverviewMetrics
 						metricName="P/L YTD"
-						metricData="$10,000.00"
+						metricData={PortfolioMetricsData.profitLossYTD}
 					/>
 					<PortfolioOverviewMetrics
 						metricName="Buying Power"
-						metricData="$50,000.00"
+						metricData={PortfolioMetricsData.buyingPower}
 					/>
 				</Grid>
 			</Grid>
 			<Grid
-				item
 				xs={12}
-				sm={4}
+				sm={5}
 				component={motion.div}
 				variants={coverItem}
+				ref={containerRef}
 			>
 				<YTDProfitLossAreaGraph
 					data={{
@@ -175,12 +205,12 @@ const PortfolioOverview = () => {
 							9000, 10000, -5000, -6000
 						]
 					}}
+					height={containerRef.current?.clientHeight}
 				/>
 			</Grid>
 			<Grid
-				item
 				xs={12}
-				sm={4}
+				sm={5}
 				component={motion.div}
 				variants={coverItem}
 			>
@@ -191,19 +221,20 @@ const PortfolioOverview = () => {
 							{ value: 30000, name: "Allocated Funds" }
 						]
 					}}
+					height={containerRef.current?.clientHeight}
 				/>
 			</Grid>
+			{positions.length > 0 && (
+				<Grid
+					xs={12}
+					component={motion.div}
+					variants={coverItem}
+				>
+					<Typography variant="h5">Positions</Typography>
+					<PositionCards />
+				</Grid>
+			)}
 			<Grid
-				item
-				xs={12}
-				component={motion.div}
-				variants={coverItem}
-			>
-				<Typography variant="h5">Positions</Typography>
-				<PositionCards />
-			</Grid>
-			<Grid
-				item
 				xs={12}
 				component={motion.div}
 				variants={coverItem}
