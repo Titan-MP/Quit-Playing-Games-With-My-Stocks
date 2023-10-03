@@ -13,7 +13,6 @@ const WatchlistCard = ({ stock }) => {
 				exit={{ opacity: 0, y: -50 }}
 			>
 				<Grid
-					item
 					xs="auto"
 				>
 					<Chip

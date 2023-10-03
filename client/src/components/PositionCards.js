@@ -18,7 +18,7 @@ const PositionCard = ({ position }) => {
 
 	const PositionMetric = ({ metricName, metricData }) => {
 		return (
-			<Grid item>
+			<Grid>
 				<Typography
 					variant="subtitle2"
 					color={"text.secondary"}
@@ -40,7 +40,6 @@ const PositionCard = ({ position }) => {
 
 	return (
 		<Grid
-			item
 			xs={12}
 			sm={6}
 			md={4}
