@@ -35,7 +35,7 @@ const SignupForm = ({ formValid, onFormUpdate }) => {
 					variables: {
 						username: values.username,
 						password: values.password,
-						amount: 5000
+						initialFunding: 100000,
 					}
 				});
 				Auth.login(data.addUser.token);
