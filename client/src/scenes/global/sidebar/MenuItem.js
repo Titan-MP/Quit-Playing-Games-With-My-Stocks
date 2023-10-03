@@ -19,9 +19,7 @@ const variants = {
 	}
 };
 
-const colors = ["#FF008C", "#D309E1", "#9C1AFF", "#7700FF", "#4400FF"];
-
-const MenuItem = ({ key, pageName, icon }) => {
+const MenuItem = ({ pageName, icon }) => {
 	return (
 		<Box
 			component={motion.li}

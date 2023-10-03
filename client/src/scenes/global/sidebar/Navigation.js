@@ -4,16 +4,13 @@ import MenuItem from "./MenuItem";
 import { Box } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PaidIcon from '@mui/icons-material/Paid';
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
 
 const menuItems = [
 	{
-		key: 0,
 		pageName: "Dashboard",
 		icon: <DashboardIcon />
 	},
 	{
-		key: 1,
 		pageName: "Trade",
 		icon: <PaidIcon />
 	}
@@ -41,9 +38,9 @@ const Navigation = () => {
 				width: "230px"
 			}}
 		>
-			{menuItems.map((menuItem, index) => (
+			{menuItems.map((menuItem) => (
 				<MenuItem
-					key={menuItem.key}
+					key={menuItem.pageName}
 					pageName={menuItem.pageName}
 					icon={menuItem.icon}
 				/>
