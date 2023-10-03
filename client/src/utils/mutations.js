@@ -1,6 +1,21 @@
 import { gql } from "@apollo/client";
 
-// Login a user
+
+/**
+ * A GraphQL mutation to login a user.
+ *
+ * @typedef {Object} LOGIN_USER
+ * @property {string} LOGIN_USER.token - The token generated for the user.
+ * @property {Object} LOGIN_USER.user - The user object containing the username, password, and _id.
+ * @property {string} LOGIN_USER.user.username - The username of the user.
+ * @property {string} LOGIN_USER.user.password - The password of the user.
+ * @property {string} LOGIN_USER.user._id - The unique identifier of the user.
+ *
+ * @param {string} username - The username of the user.
+ * @param {string} password - The password of the user.
+ *
+ * @returns {Object} - The token and user object of the logged in user.
+ */
 export const LOGIN_USER = gql`
 	mutation Login($username: String!, $password: String!) {
 		login(username: $username, password: $password) {
@@ -14,7 +29,23 @@ export const LOGIN_USER = gql`
 	}
 `;
 
-// Create a new user
+
+/**
+ * Mutation to add a new user to the database.
+ *
+ * @typedef {Object} User - The user object returned by the mutation.
+ * @property {string} _id - The unique identifier of the user.
+ * @property {string} username - The username of the user.
+ *
+ * @typedef {Object} AddUserResponse - The response object returned by the mutation.
+ * @property {string} token - The authentication token for the user.
+ * @property {User} user - The user object.
+ *
+ * @param {string} $username - The username of the new user.
+ * @param {string} $password - The password of the new user.
+ * @param {number} $initialFunding - The initial funding amount for the new user.
+ * @returns {AddUserResponse} The response object containing the authentication token and user object.
+ */
 export const ADD_USER = gql`
 	mutation addUser(
 		$username: String!
@@ -35,7 +66,20 @@ export const ADD_USER = gql`
 	}
 `;
 
-// Add a new position
+
+/**
+ * Mutation to add a new position for a user
+ * @typedef {Object} Position
+ * @property {string} _id - The unique identifier for the position
+ * @property {Object} stock - The stock associated with the position
+ * @property {string} stock._id - The unique identifier for the stock
+ * @property {string} stock.ticker - The ticker symbol for the stock
+ * @property {number} price - The price at which the position was purchased
+ * @property {number} quantity - The quantity of shares purchased
+ * @property {Object} user - The user who owns the position
+ * @property {string} user._id - The unique identifier for the user
+ * @property {string} user.username - The username of the user
+ */
 export const ADD_POSITION = gql`
 	mutation addPosition($stock: ID!, $price: Float!, $quantity: Int!) {
 		addPosition(stock: $stock, price: $price, quantity: $quantity) {
@@ -54,7 +98,12 @@ export const ADD_POSITION = gql`
 	}
 `;
 
-// Add a new stock
+
+/**
+ * Mutation to add a stock to the database.
+ * @param {string} ticker - The ticker symbol of the stock to add.
+ * @returns {object} - The _id and ticker of the added stock.
+ */
 export const ADD_STOCK = gql`
 	mutation addStock($ticker: String!) {
 		addStock(ticker: $ticker) {
@@ -64,7 +113,14 @@ export const ADD_STOCK = gql`
 	}
 `;
 
-// Add a new watchlist
+
+/**
+ * Mutation to add a watchlist with a given name.
+ * @mutation
+ * @typedef {Object} ADD_WATCHLIST
+ * @property {String} name - The name of the watchlist to be added.
+ * @property {String} _id - The unique identifier of the added watchlist.
+ */
 export const ADD_WATCHLIST = gql`
 	mutation addWatchlist($name: String!) {
 		addWatchlist(name: $name) {
@@ -74,7 +130,12 @@ export const ADD_WATCHLIST = gql`
 	}
 `;
 
-// Remove a position
+
+/**
+ * Removes a position from the database.
+ * @param {string} positionId - The ID of the position to be removed.
+ * @returns {object} - The removed position object containing _id, stock, price, quantity, and user fields.
+ */
 export const REMOVE_POSITION = gql`
 	mutation removePosition($positionId: ID!) {
 		removePosition(positionId: $positionId) {
@@ -93,7 +154,13 @@ export const REMOVE_POSITION = gql`
 	}
 `;
 
-// Remove a stock
+
+/**
+ * Removes a stock from the database.
+ * @mutation
+ * @param {string} $stockId - The ID of the stock to be removed.
+ * @returns {Object} The removed stock's ID and ticker.
+ */
 export const REMOVE_STOCK = gql`
 	mutation removeStock($stockId: ID!) {
 		removeStock(stockId: $stockId) {
@@ -103,7 +170,13 @@ export const REMOVE_STOCK = gql`
 	}
 `;
 
-// Remove a watchlist
+
+/**
+ * Removes a watchlist from the database.
+ *
+ * @param {string} watchlistId - The ID of the watchlist to be removed.
+ * @returns {Object} The removed watchlist's ID and name.
+ */
 export const REMOVE_WATCHLIST = gql`
 	mutation removeWatchlist($watchlistId: ID!) {
 		removeWatchlist(watchlistId: $watchlistId) {
@@ -113,7 +186,13 @@ export const REMOVE_WATCHLIST = gql`
 	}
 `;
 
-// Add a stock to a watchlist
+
+/**
+ * Mutation to add a stock to a watchlist
+ * @param {string} watchlistId - The ID of the watchlist to add the stock to
+ * @param {string} stockId - The ID of the stock to add to the watchlist
+ * @returns {object} - The updated watchlist object with the added stock
+ */
 export const ADD_STOCK_TO_WATCHLIST = gql`
 	mutation addStockToWatchlist($watchlistId: ID!, $stockId: ID!) {
 		addStockToWatchlist(watchlistId: $watchlistId, stockId: $stockId) {
@@ -127,7 +206,23 @@ export const ADD_STOCK_TO_WATCHLIST = gql`
 	}
 `;
 
-// Remove a stock from a watchlist
+
+/**
+ * Removes a stock from a watchlist.
+ *
+ * @mutation
+ * @typedef {Object} Mutation
+ * @property {string} _id - The ID of the watchlist.
+ * @property {string} name - The name of the watchlist.
+ * @property {Object[]} stocks - The list of stocks in the watchlist.
+ * @property {string} stocks._id - The ID of the stock.
+ * @property {string} stocks.ticker - The ticker symbol of the stock.
+ *
+ * @param {string} watchlistId - The ID of the watchlist to remove the stock from.
+ * @param {string} stockId - The ID of the stock to remove from the watchlist.
+ *
+ * @returns {Mutation} The updated watchlist after removing the stock.
+ */
 export const REMOVE_STOCK_FROM_WATCHLIST = gql`
 	mutation removeStockFromWatchlist($watchlistId: ID!, $stockId: ID!) {
 		removeStockFromWatchlist(watchlistId: $watchlistId, stockId: $stockId) {
@@ -141,7 +236,20 @@ export const REMOVE_STOCK_FROM_WATCHLIST = gql`
 	}
 `;
 
-// Update a position
+
+/**
+ * Mutation to update a position in the database.
+ * @typedef {Object} Position - The position object to be updated.
+ * @property {string} _id - The ID of the position.
+ * @property {Object} stock - The stock object associated with the position.
+ * @property {string} stock._id - The ID of the stock.
+ * @property {string} stock.ticker - The ticker symbol of the stock.
+ * @property {number} price - The updated price of the position.
+ * @property {number} quantity - The updated quantity of the position.
+ * @property {Object} user - The user object associated with the position.
+ * @property {string} user._id - The ID of the user.
+ * @property {string} user.username - The username of the user.
+ */
 export const UPDATE_POSITION = gql`
 	mutation updatePosition($positionId: ID!, $price: Float!, $quantity: Int!) {
 		updatePosition(
@@ -164,7 +272,17 @@ export const UPDATE_POSITION = gql`
 	}
 `;
 
-// Update a stock
+
+/**
+ * Mutation to update a stock's ticker by its ID.
+ * @mutation
+ * @typedef {Object} UPDATE_STOCK
+ * @property {string} UPDATE_STOCK - The GraphQL mutation query.
+ * @property {string} UPDATE_STOCK.stockId - The ID of the stock to update.
+ * @property {string} UPDATE_STOCK.ticker - The new ticker symbol for the stock.
+ * @property {string} UPDATE_STOCK._id - The ID of the updated stock.
+ * @property {string} UPDATE_STOCK.ticker - The new ticker symbol of the updated stock.
+ */
 export const UPDATE_STOCK = gql`
 	mutation updateStock($stockId: ID!, $ticker: String!) {
 		updateStock(stockId: $stockId, ticker: $ticker) {
@@ -174,7 +292,15 @@ export const UPDATE_STOCK = gql`
 	}
 `;
 
-// Update a watchlist
+
+/**
+ * Mutation to update a watchlist's name
+ * @typedef {Object} gql
+ * @property {function} gql - A function that parses a GraphQL query string into a query document.
+ * @param {string} watchlistId - The ID of the watchlist to update
+ * @param {string} name - The new name for the watchlist
+ * @returns {Object} - The updated watchlist object with its ID and name
+ */
 export const UPDATE_WATCHLIST = gql`
 	mutation updateWatchlist($watchlistId: ID!, $name: String!) {
 		updateWatchlist(watchlistId: $watchlistId, name: $name) {
@@ -184,7 +310,13 @@ export const UPDATE_WATCHLIST = gql`
 	}
 `;
 
-// Update a user
+
+/**
+ * Mutation to update user's amount.
+ * @typedef {Object} gql
+ * @property {function} gql - A function that parses GraphQL query strings into the standard GraphQL AST.
+ * @returns {Object} - The updated user object with _id, username, and amount fields.
+ */
 export const UPDATE_USER = gql`
 	mutation updateUser($amount: Int!) {
 		updateUser(amount: $amount) {
@@ -195,7 +327,14 @@ export const UPDATE_USER = gql`
 	}
 `;
 
-// Update a user's password
+
+/**
+ * Mutation to update user password.
+ * @typedef {Object} MutationUpdateUserPassword
+ * @property {string} _id - The ID of the user.
+ * @property {string} username - The username of the user.
+ * @property {number} amount - The amount of money the user has.
+ */
 export const UPDATE_USER_PASSWORD = gql`
 	mutation updateUserPassword($password: String!) {
 		updateUserPassword(password: $password) {
@@ -206,7 +345,14 @@ export const UPDATE_USER_PASSWORD = gql`
 	}
 `;
 
-// Update a user's username
+
+/**
+ * Mutation to update user's username
+ * @typedef {Object} MutationUpdateUserUsername
+ * @property {string} _id - The ID of the updated user
+ * @property {string} username - The new username of the updated user
+ * @property {number} amount - The amount of money the updated user has
+ */
 export const UPDATE_USER_USERNAME = gql`
 	mutation updateUserUsername($username: String!) {
 		updateUserUsername(username: $username) {
@@ -217,7 +363,19 @@ export const UPDATE_USER_USERNAME = gql`
 	}
 `;
 
-// Update a user's watchlists
+
+/**
+ * Mutation to update user watchlists
+ * @mutation
+ * @typedef {Object} UPDATE_USER_WATCHLISTS
+ * @property {function} updateUserWatchlists - Function to update user watchlists
+ * @property {string} _id - User ID
+ * @property {string} username - User's username
+ * @property {number} amount - User's amount
+ * @property {Array} watchlists - Array of user's watchlists
+ * @property {string} watchlists._id - Watchlist ID
+ * @property {string} watchlists.name - Watchlist name
+ */
 export const UPDATE_USER_WATCHLISTS = gql`
 	mutation updateUserWatchlists($watchlists: [ID]!) {
 		updateUserWatchlists(watchlists: $watchlists) {
@@ -232,7 +390,16 @@ export const UPDATE_USER_WATCHLISTS = gql`
 	}
 `;
 
-// Update a watchlist's stocks
+
+/**
+ * Mutation to update the stocks in a watchlist.
+ * @typedef {Object} WatchlistStocks
+ * @property {string} _id - The ID of the watchlist.
+ * @property {string} name - The name of the watchlist.
+ * @property {Array.<Object>} stocks - The array of stocks in the watchlist.
+ * @property {string} stocks._id - The ID of the stock.
+ * @property {string} stocks.ticker - The ticker symbol of the stock.
+ */
 export const UPDATE_WATCHLIST_STOCKS = gql`
 	mutation updateWatchlistStocks($watchlistId: ID!, $stocks: [ID]!) {
 		updateWatchlistStocks(watchlistId: $watchlistId, stocks: $stocks) {
