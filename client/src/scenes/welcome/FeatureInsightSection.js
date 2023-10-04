@@ -18,7 +18,6 @@ const FeatureInsight = ({
 }) => {
 	return (
 		<Grid
-			item
 			xs={12}
 			sm={4}
 			component={motion.div}
