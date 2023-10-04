@@ -1,49 +1,26 @@
 import Grid from "@mui/material/Unstable_Grid2";
-import { Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import YTDProfitLossAreaGraph from "../../components/YTDProfitLossAreaGraph";
 import BuyingPowerPieChart from "../../components/BuyingPowerPieChart";
 import { useTheme } from "@mui/material/styles";
 import PositionCards from "../../components/PositionCards";
-import WatchlistCards from "../../components/WatchlistCards";
 import Auth from "../../utils/auth";
 import { useQuery } from "@apollo/client";
 import {
 	QUERY_USER_POSITIONS,
 	QUERY_USER_WATCHLIST,
-	QUERY_USER_INITIAL_FUNDING,
-	QUERY_WATCHLIST_STOCKS
+	QUERY_USER_INITIAL_FUNDING
 } from "../../utils/queries";
 import { useRef } from "react";
+import WatchlistSection from "./WatchlistSection";
+import PortfolioOverviewMetrics from "../../components/PortfolioOverviewMetrics";
 
 /**
- * Renders a single metric for the portfolio overview.
- * @param {Object} props - The component props.
- * @param {string} props.metricName - The name of the metric to display.
- * @param {string} props.metricData - The data for the metric to display.
- * @returns {JSX.Element} - The rendered component.
+ * Converts a number to a US dollar currency format.
+ * @param {number} num - The number to be converted.
+ * @returns {string} - The number in US dollar currency format.
  */
-const PortfolioOverviewMetrics = ({ metricName, metricData }) => {
-	const theme = useTheme();
-
-	return (
-		<Grid>
-			<Typography
-				variant="h6"
-				color={"text.secondary"}
-			>
-				{metricName}
-			</Typography>
-			<Typography
-				fontSize={theme.typography.h4.fontSize}
-				fontWeight="100"
-			>
-				{metricData}
-			</Typography>
-		</Grid>
-	);
-};
-
 const toUSD = (num) => {
 	return new Intl.NumberFormat("en-US", {
 		style: "currency",
@@ -95,19 +72,12 @@ const PortfolioOverview = () => {
 	const theme = useTheme();
 	const positions = [];
 
-	// const { watchlistsLoading, data: watchlistsData } = useQuery(
-	// 	QUERY_USER_WATCHLIST,
-	// 	{
-	// 		variables: { user: Auth.getProfile().data._id }
-	// 	}
-	// );
-
-	// const { watchlistLoading, data: watchlistData } = useQuery(
-	// 	QUERY_WATCHLIST_STOCKS,
-	// 	{
-	// 		variables: { id: watchlistsData.watchlists[0]._id }
-	// 	}
-	// );
+	const { watchlistsLoading, data: watchlistsData } = useQuery(
+		QUERY_USER_WATCHLIST,
+		{
+			variables: { user: Auth.getProfile().data._id }
+		}
+	);
 
 	const { initialFundingLoading, data: initialFundingData } = useQuery(
 		QUERY_USER_INITIAL_FUNDING,
@@ -277,8 +247,7 @@ const PortfolioOverview = () => {
 				component={motion.div}
 				variants={coverItem}
 			>
-				<Typography variant="h4">Watchlist</Typography>
-				{/* <WatchlistCards watchlist={watchlistData} /> */}
+				<WatchlistSection />
 			</Grid>
 		</Grid>
 	);
