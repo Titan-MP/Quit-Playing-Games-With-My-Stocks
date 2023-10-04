@@ -68,14 +68,14 @@ You will be able to search and watchlist your favorite tickers/symbols.
    Welcome Page
     
 
-![Welcome1](./client/src/assets/images/Welcome.png)
-![Welcome2](./client/src/assets/images/Welcome2.png)
+![Welcome1](/assets/images/Welcome.png)
+![Welcome2](/assets/images/Welcome2.png)
 
 
    Dashboard
     
 
-![dashboard](./client/src/assets/images/Dashboard.png)
+![dashboard](/assets/images/Dashboard.png)
 
 
 ## Credits
