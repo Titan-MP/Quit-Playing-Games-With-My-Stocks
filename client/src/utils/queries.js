@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 
-
 /**
  * A GraphQL query to get the net liquidation of a user.
  *
@@ -20,7 +19,6 @@ export const QUERY_NET_LIQUIDATION = gql`
 	}
 `;
 
-
 /**
  * GraphQL query to get a user's positions.
  *
@@ -39,21 +37,21 @@ export const QUERY_NET_LIQUIDATION = gql`
  * @returns {User} The user object containing their positions.
  */
 export const QUERY_USER_POSITIONS = gql`
-    query User($username: String!) {
-        user(username: $username) {
-            positions {
-                _id
-                stock {
-                    _id
-                    ticker
-                }
-                price
-                quantity
-            }
-        }
-    }
+	query User($username: String!) {
+		user(username: $username) {
+			positions {
+				_id
+				symbol {
+					_id
+					symbol
+					name
+				}
+				price
+				quantity
+			}
+		}
+	}
 `;
-
 
 /**
  * A GraphQL query to retrieve a user's watchlist.
@@ -67,19 +65,16 @@ export const QUERY_USER_POSITIONS = gql`
  * @property {string} user.watchlist.stock.ticker - The ticker symbol of the stock.
  */
 export const QUERY_USER_WATCHLIST = gql`
-    query User($username: String!) {
-        user(username: $username) {
-            watchlist {
-                _id
-                stock {
-                    _id
-                    ticker
-                }
-            }
-        }
-    }
+	query User($username: String!) {
+		user(username: $username) {
+			watchlist {
+				_id
+				symbol
+				name
+			}
+		}
+	}
 `;
-
 
 /**
  * A GraphQL query to get the initial funding of a user.
@@ -89,9 +84,9 @@ export const QUERY_USER_WATCHLIST = gql`
  * @property {Number} initialFunding - The initial funding of the user.
  */
 export const QUERY_USER_INITIAL_FUNDING = gql`
-    query User($username: String!) {
-        user(username: $username) {
-            initialFunding
-        }
-    }
+	query User($username: String!) {
+		user(username: $username) {
+			initialFunding
+		}
+	}
 `;

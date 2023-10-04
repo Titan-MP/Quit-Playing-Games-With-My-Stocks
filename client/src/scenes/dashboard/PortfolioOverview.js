@@ -6,10 +6,10 @@ import BuyingPowerPieChart from "../../components/BuyingPowerPieChart";
 import { useTheme } from "@mui/material/styles";
 import PositionCards from "../../components/PositionCards";
 import WatchlistCards from "../../components/WatchlistCards";
-import PortfolioMetricsData from "../../utils/portfolioMetricsCalculations";
 import Auth from "../../utils/auth";
 import { useQuery } from "@apollo/client";
 import { QUERY_USER_POSITIONS } from "../../utils/queries";
+import { QUERY_USER_INITIAL_FUNDING } from "../../utils/queries";
 import { useRef } from "react";
 
 // TODO: Remove this example watchlist
@@ -17,54 +17,7 @@ const exampleWatchlist = [
 	{ symbol: "AAPL" },
 	{ symbol: "MSFT" },
 	{ symbol: "GOOG" },
-	{ symbol: "AMZN" },
-	{ symbol: "FB" },
-	{ symbol: "TSLA" },
-	{ symbol: "NVDA" },
-	{ symbol: "PYPL" },
-	{ symbol: "ADBE" },
-	{ symbol: "NFLX" },
-	{ symbol: "CMG" },
-	{ symbol: "SBUX" },
-	{ symbol: "NKE" },
-	{ symbol: "DIS" },
-	{ symbol: "MCD" },
-	{ symbol: "BABA" },
-	{ symbol: "KO" },
-	{ symbol: "INTC" },
-	{ symbol: "AMD" },
-	{ symbol: "QCOM" },
-	{ symbol: "TMUS" },
-	{ symbol: "VZ" },
-	{ symbol: "T" },
-	{ symbol: "CSCO" },
-	{ symbol: "CRM" },
-	{ symbol: "ORCL" },
-	{ symbol: "IBM" },
-	{ symbol: "NOW" },
-	{ symbol: "SQ" },
-	{ symbol: "ZM" },
-	{ symbol: "TWTR" },
-	{ symbol: "SNAP" },
-	{ symbol: "UBER" },
-	{ symbol: "LYFT" },
-	{ symbol: "PINS" },
-	{ symbol: "TTD" },
-	{ symbol: "ROKU" },
-	{ symbol: "SHOP" },
-	{ symbol: "NET" },
-	{ symbol: "DOCU" },
-	{ symbol: "ZS" },
-	{ symbol: "CRWD" },
-	{ symbol: "OKTA" },
-	{ symbol: "DDOG" },
-	{ symbol: "FSLY" },
-	{ symbol: "MDB" },
-	{ symbol: "SPLK" },
-	{ symbol: "PANW" },
-	{ symbol: "FTNT" },
-	{ symbol: "SPY" },
-	{ symbol: "QQQ" }
+	{ symbol: "AMZN" }
 ];
 
 /**
@@ -95,16 +48,91 @@ const PortfolioOverviewMetrics = ({ metricName, metricData }) => {
 	);
 };
 
+const toUSD = (num) => {
+	return new Intl.NumberFormat("en-US", {
+		style: "currency",
+		currency: "USD"
+	}).format(num);
+};
+
+/**
+ * Calculates and returns the portfolio metrics data.
+ * @param {string} initialFunding - The initial funding amount.
+ * @param {Array} positions - The user's positions.
+ * @returns {Object} - The portfolio metrics data.
+ */
+const calculatePortfolioMetricsData = (initialFunding, positions) => {
+	const netLiquidation = positions.reduce((total, position) => {
+		return total + position.price * position.quantity;
+	}, 0);
+
+	const buyingPower =
+		netLiquidation + parseFloat(initialFunding.replace(/[^0-9.-]+/g, ""));
+
+	const profitLossYTD = positions.reduce((total, position) => {
+		return (
+			total +
+			position.quantity * (position.stock.currentPrice - position.price)
+		);
+	}, 0);
+
+	if (positions.length === 0 && profitLossYTD === 0) {
+		return {
+			netLiquidation: initialFunding,
+			buyingPower: initialFunding,
+			profitLossYTD: toUSD(profitLossYTD)
+		};
+	}
+
+	return {
+		netLiquidation: toUSD(netLiquidation),
+		buyingPower: toUSD(buyingPower),
+		profitLossYTD: toUSD(profitLossYTD)
+	};
+};
+
 /**
  * Renders the portfolio overview page, including metrics, graphs, and position/watchlist cards.
  * @returns {JSX.Element} The portfolio overview page.
  */
 const PortfolioOverview = () => {
 	const theme = useTheme();
-	const { loading, data } = useQuery(QUERY_USER_POSITIONS, {
-		variables: { username: Auth.getProfile().data.username }
-	});
-	const positions = data?.user?.positions || [];
+	const positions = [];
+
+	const { initialFundingLoading, data: initialFundingData } = useQuery(
+		QUERY_USER_INITIAL_FUNDING,
+		{
+			variables: { username: Auth.getProfile().data.username }
+		}
+	);
+
+	const initialFunding = toUSD(initialFundingData?.user?.initialFunding || 0);
+
+	const { positionsLoading, data: positionsData } = useQuery(
+		QUERY_USER_POSITIONS,
+		{
+			variables: { username: Auth.getProfile().data.username }
+		}
+	);
+
+	if (positionsData?.user?.positions) {
+		positionsData.user.positions.forEach((position) => {
+			positions.push({
+				_id: position._id,
+				stock: {
+					_id: position.stock._id,
+					ticker: position.stock.ticker
+				},
+				price: position.price,
+				quantity: position.quantity
+			});
+		});
+	}
+
+	const portfolioMetricsData = calculatePortfolioMetricsData(
+		initialFunding,
+		positions
+	);
 
 	const coverContainer = {
 		hidden: { opacity: 0 },
@@ -160,16 +188,16 @@ const PortfolioOverview = () => {
 				>
 					<PortfolioOverviewMetrics
 						metricName={"Net Liquidation"}
-						metricData={PortfolioMetricsData.netLiquidation}
+						metricData={portfolioMetricsData.netLiquidation}
 					/>
 
 					<PortfolioOverviewMetrics
 						metricName="P/L YTD"
-						metricData={PortfolioMetricsData.profitLossYTD}
+						metricData={portfolioMetricsData.profitLossYTD}
 					/>
 					<PortfolioOverviewMetrics
 						metricName="Buying Power"
-						metricData={PortfolioMetricsData.buyingPower}
+						metricData={portfolioMetricsData.buyingPower}
 					/>
 				</Grid>
 			</Grid>
