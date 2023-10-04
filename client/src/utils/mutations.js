@@ -191,7 +191,6 @@ export const ADD_STOCK_TO_WATCHLIST = gql`
 			name
 			stocks {
 				_id
-				ticker
 			}
 		}
 	}
@@ -220,7 +219,6 @@ export const REMOVE_STOCK_FROM_WATCHLIST = gql`
 			name
 			stocks {
 				_id
-				ticker
 			}
 		}
 	}
@@ -360,8 +358,8 @@ export const UPDATE_USER_USERNAME = gql`
  * @property {string} watchlists.name - Watchlist name
  */
 export const UPDATE_USER_WATCHLISTS = gql`
-	mutation updateUserWatchlists($watchlists: [ID]!) {
-		updateUserWatchlists(watchlists: $watchlists) {
+	mutation updateUserWatchlists($userId: ID!, $watchlists: [ID]!) {
+		updateUserWatchlists(userId: $userId, watchlists: $watchlists) {
 			_id
 			username
 			amount
@@ -391,6 +389,22 @@ export const UPDATE_WATCHLIST_STOCKS = gql`
 				_id
 				ticker
 			}
+		}
+	}
+`;
+
+/**
+ * Mutation to add a watchlist to a user.
+ * @mutation
+ * @typedef {Object} ADD_WATCHLIST_TO_USER
+ * @property {string} userId - The ID of the user.
+ * @property {string} watchlistId - The ID of the watchlist to be added.
+ * @returns {Object} - The ID of the user.
+ */
+export const ADD_WATCHLIST_TO_USER = gql`
+	mutation ADD_WATCHLIST_TO_USER($userId: ID!, $watchlistId: ID!) {
+		addWatchlistToUser(userId: $userId, watchlistId: $watchlistId) {
+			_id
 		}
 	}
 `;

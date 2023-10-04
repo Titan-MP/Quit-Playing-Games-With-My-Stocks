@@ -4,7 +4,10 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
 import { useMutation } from "@apollo/client";
-import { ADD_USER, ADD_WATCHLIST } from "../../utils/mutations";
+import {
+	ADD_USER,
+	ADD_WATCHLIST
+} from "../../utils/mutations";
 import Auth from "../../utils/auth";
 
 const SignupForm = ({ onFormUpdate }) => {
@@ -33,8 +36,9 @@ const SignupForm = ({ onFormUpdate }) => {
 						initialFunding: defaultFundingValue
 					}
 				});
+
 				// Add default watchlist to database
-				await addWatchlist({
+				const { data: newWatchlist } = await addWatchlist({
 					variables: {
 						user: data.addUser.user._id,
 						name: data.addUser.user.username + "'s Watchlist"

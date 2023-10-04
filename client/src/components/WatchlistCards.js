@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import Chip from "@mui/material/Chip";
 import { Typography } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
+import { useQuery } from "@apollo/client";
+import { QUERY_STOCKS } from "../utils/queries";
 
 const WatchlistCard = ({ stock }) => {
 	return (
@@ -30,34 +32,26 @@ const WatchlistCard = ({ stock }) => {
 };
 
 const WatchlistCards = ({ watchlist }) => {
-	if (!watchlist.stocks || watchlist.stocks.length === 0) {
-		return null;
-	}
 
-	/**
-	 * Returns an array of unique stocks from the watchlist array based on their symbol property.
-	 * @param {Array} watchlist - An array of stock objects.
-	 * @returns {Array} - An array of unique stock objects based on their symbol property.
-	 */
-	const uniqueWatchlist = Array.from(
-		new Set(watchlist.stocks.map((stock) => stock.symbol))
-	).map((symbol) => watchlist.stocks.find((stock) => stock.symbol === symbol));
+	// Create an array of stock ids from the watchlist
+	const stockIds = watchlist.stocks.map((stock) => stock._id);
 
-	/**
-	 * Sorts the uniqueWatchlist array in alphabetical order based on the symbol property of each object.
-	 * @param {Array} uniqueWatchlist - An array of objects representing the user's unique watchlist.
-	 * @returns {Array} - The sorted uniqueWatchlist array.
-	 */
-	const sortedWatchlist = uniqueWatchlist.sort((a, b) =>
-		a.symbol.localeCompare(b.symbol)
-	);
+	// Use the array of stockIds to get the stocks from the database
+	const { data: stocks, refetch } = useQuery(QUERY_STOCKS, {
+		variables: { ids: stockIds }
+	});
+
+	// Refetch the data whenever the watchlist prop changes
+	useEffect(() => {
+		refetch();
+	}, [watchlist]);
 
 	return (
 		<Grid
 			container
 			spacing={2}
 		>
-			{sortedWatchlist.map((stock) => (
+			{stocks?.stocks.map((stock) => (
 				<WatchlistCard
 					key={stock.symbol}
 					stock={stock}

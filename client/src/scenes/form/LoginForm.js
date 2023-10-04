@@ -1,4 +1,4 @@
-																/* ===================== IMPORTS ====================== */
+/* ===================== IMPORTS ====================== */
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -7,22 +7,21 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 
+/* ==================== COMPONENTS ==================== */
 
-																/* ==================== COMPONENTS ==================== */
-
-																/* -------------------- LOGIN FORM -------------------- */
+/* -------------------- LOGIN FORM -------------------- */
 const LoginForm = () => {
 	const isNonMobile = useMediaQuery("(min-width:600px)");
 	const [login, { error, data }] = useMutation(LOGIN_USER);
 
-																/* ---------- Formik and Yup Configurations ----------- */
-																/* Yup validation schema                       			*/
+	/* ---------- Formik and Yup Configurations ----------- */
+	/* Yup validation schema                       			*/
 	const userSchema = yup.object().shape({
 		username: yup.string().required("Username is required"),
 		password: yup.string().required("Password is required")
 	});
 
-																/* Formik configuration 									*/
+	/* Formik configuration 									*/
 	const formik = useFormik({
 		initialValues: {
 			username: "",
@@ -102,6 +101,14 @@ const LoginForm = () => {
 				>
 					<Typography variant="body1">Login</Typography>
 				</Button>
+				{error && (
+					<Typography
+						variant="body1"
+						color="error"
+					>
+						{error.message}
+					</Typography>
+				)}
 			</Box>
 		</form>
 	);

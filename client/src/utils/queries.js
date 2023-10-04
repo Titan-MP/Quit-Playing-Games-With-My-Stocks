@@ -68,6 +68,9 @@ export const QUERY_USER_WATCHLIST = gql`
 		watchlists(user: $user) {
 			_id
 			name
+			stocks {
+				_id
+			}
 		}
 	}
 `;
@@ -135,6 +138,31 @@ export const QUERY_STOCKS = gql`
 			_id
 			symbol
 			name
+		}
+	}
+`;
+
+/**
+ * GraphQL query to get the watchlist stocks of a user.
+ *
+ * @typedef {Object} QUERY_USER_WATCHLIST_STOCKS
+ * @property {Object} user - The user object.
+ * @property {Array} user.watchlists - The watchlists of the user.
+ * @property {Array} user.watchlists.stocks - The stocks in the user's watchlists.
+ * @property {string} user.watchlists.stocks.symbol - The symbol of the stock.
+ *
+ * @param {string} username - The username of the user.
+ * @returns {QUERY_USER_WATCHLIST_STOCKS} The watchlist stocks of the user.
+ */
+export const QUERY_USER_WATCHLIST_STOCKS = gql`
+	query QUERY_USER_WATCHLIST_STOCKS($username: String!) {
+		user(username: $username) {
+			watchlists {
+				name
+				stocks {
+					symbol
+				}
+			}
 		}
 	}
 `;

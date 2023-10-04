@@ -213,7 +213,7 @@ const PortfolioOverview = () => {
 							9000, 10000, -5000, -6000
 						]
 					}}
-					height={containerRef.current?.clientHeight}
+					height={"600px"}
 				/>
 			</Grid>
 			<Grid
@@ -229,19 +229,17 @@ const PortfolioOverview = () => {
 							{ value: 30000, name: "Allocated Funds" }
 						]
 					}}
-					height={containerRef.current?.clientHeight}
+					height={"600px"}
 				/>
 			</Grid>
-			{positions.length > 0 && (
-				<Grid
-					xs={12}
-					component={motion.div}
-					variants={coverItem}
-				>
-					<Typography variant="h5">Positions</Typography>
-					<PositionCards />
-				</Grid>
-			)}
+			<Grid
+				xs={12}
+				component={motion.div}
+				variants={coverItem}
+			>
+				<Typography variant="h5">Positions</Typography>
+				<PositionCards />
+			</Grid>
 			<Grid
 				xs={12}
 				component={motion.div}

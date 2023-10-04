@@ -63,10 +63,8 @@ const typeDefs = gql`
 			initialFunding: Int!
 		): Auth
 		addWatchlist(user: ID!, name: String!): Watchlist
-		addStockToWatchlist(
-			watchlistId: ID!
-			stockId: ID!
-		): Watchlist
+		addWatchlistToUser(userId: ID!, watchlistId: ID!): User
+		addStockToWatchlist(watchlistId: ID!, stockId: ID!): Watchlist
 		login(username: String!, password: String!): Auth
 		removePosition(_id: ID!): Position
 		removeStock(_id: ID!): Stock
@@ -75,8 +73,8 @@ const typeDefs = gql`
 		removeStockFromWatchlist(_id: ID!): Watchlist
 		updatePosition(_id: ID!, quantity: Int!): Position
 		updateStock(_id: ID!, quantity: Int!): Stock
-		updateUser(_id: ID!, quantity: Int!): User
-		updateWatchlist(_id: ID!, quantity: Int!): Watchlist
+		updateUser(_id: ID!): User
+		updateWatchlist(_id: ID!): Watchlist
 	}
 `;
 
