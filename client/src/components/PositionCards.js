@@ -9,12 +9,17 @@ import * as echarts from "echarts/core";
 import { LineChart } from "echarts/charts";
 import { GridComponent, TooltipComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
+import { useQuery } from "@apollo/client";
+import { QUERY_STOCK } from "../utils/queries";
 
 echarts.use([GridComponent, TooltipComponent, LineChart, CanvasRenderer]);
 
 const PositionCard = ({ position }) => {
 	const theme = useTheme();
 	const [chartVisibiltiy, setChartVisibility] = useState(true);
+	const { loading, data: stockData } = useQuery(QUERY_STOCK, {
+		variables: { id: position.stock._id }
+	});
 
 	const PositionMetric = ({ metricName, metricData }) => {
 		return (
@@ -58,11 +63,11 @@ const PositionCard = ({ position }) => {
 				>
 					<PositionMetric
 						metricName={"Ticker"}
-						metricData={position.ticker}
+						metricData={stockData.stock.symbol}
 					/>
 					<PositionMetric
 						metricName={"Purchase Price"}
-						metricData={position.purchasePrice}
+						metricData={position.price}
 					/>
 					<PositionMetric
 						metricName={"Quantity"}
@@ -109,7 +114,6 @@ const PositionCard = ({ position }) => {
 };
 
 const PositionCards = ({ positions }) => {
-
 	return (
 		<Grid
 			container

@@ -37,18 +37,14 @@ export const QUERY_NET_LIQUIDATION = gql`
  * @returns {User} The user object containing their positions.
  */
 export const QUERY_USER_POSITIONS = gql`
-	query User($username: String!) {
-		user(username: $username) {
-			positions {
+	query QUERY_USER_POSITIONS($user: ID!) {
+		positions(user: $user) {
+			_id
+			stock {
 				_id
-				symbol {
-					_id
-					symbol
-					name
-				}
-				price
-				quantity
 			}
+			price
+			quantity
 		}
 	}
 `;

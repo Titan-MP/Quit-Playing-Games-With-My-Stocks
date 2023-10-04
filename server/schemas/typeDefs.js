@@ -3,8 +3,8 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
 	type Position {
 		_id: ID!
-		symbol: [Stock]
-		price: Int!
+		stock: Stock!
+		price: Float!
 		quantity: Int!
 		user: User!
 	}
@@ -52,8 +52,8 @@ const typeDefs = gql`
 	type Mutation {
 		addPosition(
 			user: ID!
-			symbol: String!
-			price: Int!
+			stock: ID!
+			price: Float!
 			quantity: Int!
 		): Position
 		addStock(symbol: String!, name: String!): Stock

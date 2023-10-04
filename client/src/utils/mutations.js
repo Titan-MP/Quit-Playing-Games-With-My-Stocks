@@ -78,19 +78,19 @@ export const ADD_USER = gql`
  * @property {string} user.username - The username of the user
  */
 export const ADD_POSITION = gql`
-	mutation addPosition($stock: ID!, $price: Float!, $quantity: Int!) {
-		addPosition(stock: $stock, price: $price, quantity: $quantity) {
+	mutation ADD_POSITION(
+		$user: ID!
+		$stock: ID!
+		$price: Float!
+		$quantity: Int!
+	) {
+		addPosition(
+			user: $user
+			stock: $stock
+			price: $price
+			quantity: $quantity
+		) {
 			_id
-			stock {
-				_id
-				ticker
-			}
-			price
-			quantity
-			user {
-				_id
-				username
-			}
 		}
 	}
 `;

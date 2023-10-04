@@ -13,10 +13,19 @@ import {
 	TextField
 } from "@mui/material";
 
-const AddStockToWatchlistDialog = ({ open, handleClose }) => {
+const AddStockToWatchlistDialog = () => {
+	const [open, setOpen] = useState(false);
 	const [ticker, setTicker] = useState("");
 	const [addStock] = useMutation(ADD_STOCK);
 	const [addStockToWatchlist] = useMutation(ADD_STOCK_TO_WATCHLIST);
+
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
 
 	// Get user's watchlist id
 	const { watchlistsLoading, data: watchlistsData } = useQuery(
@@ -56,37 +65,46 @@ const AddStockToWatchlistDialog = ({ open, handleClose }) => {
 	};
 
 	return (
-		<Dialog
-			open={open}
-			onClose={handleClose}
-		>
-			<DialogTitle>Add Stock to Watchlist</DialogTitle>
-			<DialogContent>
-				<DialogContentText>
-					Enter the ticker symbol of the stock you want to add to the
-					watchlist.
-				</DialogContentText>
-				<TextField
-					autoFocus
-					margin="dense"
-					id="ticker"
-					label="Ticker Symbol"
-					type="text"
-					fullWidth
-					value={ticker}
-					onChange={handleTickerChange}
-				/>
-			</DialogContent>
-			<DialogActions>
-				<Button onClick={handleClose}>Cancel</Button>
-				<Button
-					onClick={handleAddStock}
-					color="primary"
-				>
-					Add
-				</Button>
-			</DialogActions>
-		</Dialog>
+		<div>
+			<Button
+				variant="contained"
+				color="primary"
+				onClick={handleOpen}
+			>
+				Add to Watchlist
+			</Button>
+			<Dialog
+				open={open}
+				onClose={handleClose}
+			>
+				<DialogTitle>Add Stock to Watchlist</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Enter the ticker symbol of the stock you want to add to
+						the watchlist.
+					</DialogContentText>
+					<TextField
+						autoFocus
+						margin="dense"
+						id="ticker"
+						label="Ticker Symbol"
+						type="text"
+						fullWidth
+						value={ticker}
+						onChange={handleTickerChange}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}>Cancel</Button>
+					<Button
+						onClick={handleAddStock}
+						color="primary"
+					>
+						Add
+					</Button>
+				</DialogActions>
+			</Dialog>
+		</div>
 	);
 };
 

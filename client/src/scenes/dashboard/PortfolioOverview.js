@@ -1,10 +1,9 @@
 import Grid from "@mui/material/Unstable_Grid2";
-import { IconButton, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import YTDProfitLossAreaGraph from "../../components/YTDProfitLossAreaGraph";
 import BuyingPowerPieChart from "../../components/BuyingPowerPieChart";
 import { useTheme } from "@mui/material/styles";
-import PositionCards from "../../components/PositionCards";
 import Auth from "../../utils/auth";
 import { useQuery } from "@apollo/client";
 import {
@@ -13,6 +12,7 @@ import {
 	QUERY_USER_INITIAL_FUNDING
 } from "../../utils/queries";
 import { useRef } from "react";
+import PositionsSection from "./PositionsSection";
 import WatchlistSection from "./WatchlistSection";
 import PortfolioOverviewMetrics from "../../components/PortfolioOverviewMetrics";
 
@@ -237,8 +237,7 @@ const PortfolioOverview = () => {
 				component={motion.div}
 				variants={coverItem}
 			>
-				<Typography variant="h5">Positions</Typography>
-				<PositionCards />
+				<PositionsSection />
 			</Grid>
 			<Grid
 				xs={12}
