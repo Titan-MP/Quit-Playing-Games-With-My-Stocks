@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
-import {
-	BuildManagePortfolioSVG,
-	AnalyzePositionsSVG,
-	KeepStockWatchlistsSVG
-} from "../../assets/images";
+import BuildManagePortfolio from "../../assets/images/buildManagePortfolio.png";
+import	AnalyzePositions from '../../assets/images/analyzePositions.png'
+import	KeepStockWatchlists from "../../assets/images/keepStockWatchlist.png"
+ 
 
 const FeatureInsight = ({
 	image,
@@ -75,6 +74,7 @@ const FeatureInsightSection = ({ motionVariants }) => {
 	};
 
 	return (
+	
 		<Grid
 			container
 			xs={12}
@@ -90,28 +90,30 @@ const FeatureInsightSection = ({ motionVariants }) => {
 				}
 			}}
 		>
+			<img src={BuildManagePortfolio} alt="portfolio" className="featureIcons"></img>
 			<FeatureInsight
-				image={<BuildManagePortfolioSVG />}
+				image={BuildManagePortfolio}
 				description={"Build and manage your own stock portfolio."}
 				motionVariant={motionVariants[1]}
 				featureColor={"#FF7272"}
 				setFeatureSectionBackground={handleFeatureBackground}
 			/>
 			<FeatureInsight
-				image={<AnalyzePositionsSVG />}
+				image={AnalyzePositions}
 				description={"Analyze multiple positions at once."}
 				motionVariant={motionVariants[1]}
 				featureColor={"#407BFF"}
 				setFeatureSectionBackground={handleFeatureBackground}
 			/>
 			<FeatureInsight
-				image={<KeepStockWatchlistsSVG />}
+				image={KeepStockWatchlists}
 				description={"Keep a watchlist of your most relevant stocks."}
 				motionVariant={motionVariants[1]}
 				featureColor={"#FFC727"}
 				setFeatureSectionBackground={handleFeatureBackground}
 			/>
 		</Grid>
+		
 	);
 };
 

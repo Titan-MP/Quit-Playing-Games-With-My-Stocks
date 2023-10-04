@@ -1,7 +1,7 @@
                                                                 /* ===================== IMPORTS ====================== */
 
 import React, { useContext } from "react";
-import { Box, Button, IconButton, useTheme } from "@mui/material";
+import { Box, Button, Container, IconButton, useTheme } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -99,6 +99,7 @@ const logoutFunction = async (e) => {
 
                                                                 /* ----------------- Topbar Return -------------------- */
     return (
+        // <Container>
 		<Box
 			component={motion.div}
             initial={{ opacity: 0 }}
@@ -166,6 +167,7 @@ const logoutFunction = async (e) => {
 				{renderMenu}
 			</Box>
 		</Box>
+        // </Container>
 	);
 };
 

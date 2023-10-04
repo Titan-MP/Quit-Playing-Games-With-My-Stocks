@@ -11,9 +11,11 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import { Container } from '@mui/material';
 
 export default function TemporaryDrawer({state, setState, toggleDrawer}) {
   const list = (anchor) => (
+    <Container>
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
@@ -52,6 +54,7 @@ export default function TemporaryDrawer({state, setState, toggleDrawer}) {
         ))}
       </List>
     </Box>
+    </Container>
   );
 
   return (

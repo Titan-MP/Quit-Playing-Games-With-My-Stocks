@@ -1,9 +1,10 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import FeatureInsightSection from "./FeatureInsightSection";
-import { MockTradeLogoSVG } from "../../assets/images";
+
 import './WelcomePage.css'
+import LogoIcon from '../../assets/images/MockTradeLogo.png'
 
 const WelcomePage = () => {
 	const welcomeContainer = {
@@ -24,6 +25,8 @@ const WelcomePage = () => {
 	};
 
 	return (
+		<section id="WelcomePage">
+	
 		<Grid
 			height={"100vh"}
 			container
@@ -44,23 +47,32 @@ const WelcomePage = () => {
 					height: "75vh"
 				}}
 			>
-				<MockTradeLogoSVG />
-				<Typography
-					sx={{
-						fontSize: "6rem"
-					}}
-				>
+				
+				<img src={LogoIcon} alt="iconlogo" className="MockTradeLogo"></img>
+				
+
+				<div className="appName">
+				<Typography >
 					MockTrade
 				</Typography>
-				<Typography variant="h5">
+				</div>
+
+				<div className="summ">
+				<Typography variant="h5" >
 					Your Personal Portfolio Simulator
 				</Typography>
+				</div>
+
 			</Grid>
 			<FeatureInsightSection
 				motionVariants={[welcomeContainer, welcomeItem]}
 			/>
 		</Grid>
+		
+		</section>
 	);
 };
+
+
 
 export default WelcomePage;

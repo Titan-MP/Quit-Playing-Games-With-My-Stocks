@@ -66,6 +66,7 @@ function App() {
 								<Routes>
 									<Route
 										path="/"
+										// element={[<Dashboard/>]}
 										element={[<Topbar/>,<WelcomePage/>]}
 									/>
 									<Route

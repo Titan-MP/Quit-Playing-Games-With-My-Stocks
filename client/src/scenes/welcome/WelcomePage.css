@@ -1,27 +1,72 @@
+#WelcomePage {
+    height: calc(100vh - 4rem);
+    width: 100vw;
+    max-width: 75rem;
+    margin: 0 auto;
+    overflow: hidden;
+} 
+
+ .summ{
+    font-size: 1rem;
+    font-weight: 200;
+    letter-spacing: 1px;
+    justify-content: center;
+  }
+
+  .appName {
+    font-size: 1rem;
+    font-weight: 200;
+  }
+
+  .MockTradeLogo {
+    height: 30vh;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .MockTradeLogo {
+      top: 25rem;
+      height: 60%;
+      padding: 5rem;
+      right: -10vw;
+    }
+  
+    .appName {
+      font-size: 4.5vw;
+    }
+  
+    .summ {
+      font-size: 10vw;
+    }
+  }
+
 @media screen and (max-width: 840px) {
-    .MockTradeLogo{
+    .MockTradeLogo {
         top: 25rem;
-        height: 60vh;
-        padding: 5rem;
-        right: -10vw;
+        height: 30%;
+        width: 30%;
+        padding: 1rem;
     }
     .appName {
         font-size: 4.5vw;
+
     }
     .summ {
         font-size: 10vw;
     }
   }
-
-  .summ{
-    
-  }
-
-  .appName {
-    font-size: 1.75rem;
-    font-weight: 100;
-  }
-
-  .MockTradeLogo {
-
+ 
+  @media screen and (max-width: 480px) {
+    .MockTradeLogo {
+      top: 25rem;
+      height: 60vh;
+      padding: 5rem;
+    }
+  
+    .appName {
+      font-size: 4.5vw;
+    }
+  
+    .summ {
+      font-size: 10vw;
+    }
   }
