@@ -6,7 +6,7 @@ const typeDefs = gql`
 		symbol: [Stock]
 		price: Int!
 		quantity: Int!
-		user: [User]
+		user: User!
 	}
 
 	type Stock {
@@ -15,21 +15,21 @@ const typeDefs = gql`
 		name: String!
 	}
 
-  type User {
-    _id: ID!
-    username: String!
-    password: String!
-    initialFunding: Int!
-    netLiquidation: Int!
-    positions: [Position]
-    watchlist: [Watchlist]
-  }
+	type User {
+		_id: ID!
+		username: String!
+		password: String!
+		initialFunding: Int!
+		netLiquidation: Int!
+		positions: [Position]
+		watchlists: [Watchlist]
+	}
 
 	type Watchlist {
 		_id: ID!
-		symbol: String!
 		name: String!
-		user: [User]
+		user: User!
+		stocks: [Stock]
 	}
 
 	type Auth {
@@ -38,27 +38,35 @@ const typeDefs = gql`
 	}
 
 	type Query {
-		positions: [Position]
+		positions(user: ID!): [Position]
 		position(_id: ID!): Position
 		stocks: [Stock]
 		stock(_id: ID!): Stock
 		users: [User]
 		user(username: String!): User
-		watchlists: [Watchlist]
+		watchlists(user: ID!): [Watchlist]
 		watchlist(_id: ID!): Watchlist
 		me: User
 	}
 
 	type Mutation {
-		addPosition(symbol: String!, price: Int!, quantity: Int!): Position
+		addPosition(
+			user: ID!
+			symbol: String!
+			price: Int!
+			quantity: Int!
+		): Position
 		addStock(symbol: String!, name: String!): Stock
 		addUser(
 			username: String!
 			password: String!
 			initialFunding: Int!
 		): Auth
-		addWatchlist(symbol: String!, name: String!): Watchlist
-		addStockToWatchlist(symbol: String!, name: String!): Watchlist
+		addWatchlist(user: ID!, name: String!): Watchlist
+		addStockToWatchlist(
+			watchlistId: ID!
+			stockId: ID!
+		): Watchlist
 		login(username: String!, password: String!): Auth
 		removePosition(_id: ID!): Position
 		removeStock(_id: ID!): Stock

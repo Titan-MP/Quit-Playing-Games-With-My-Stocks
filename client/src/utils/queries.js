@@ -54,24 +54,20 @@ export const QUERY_USER_POSITIONS = gql`
 `;
 
 /**
- * A GraphQL query to retrieve a user's watchlist.
+ * A GraphQL query to retrieve watchlists for a specific user.
  *
- * @typedef {Object} QUERY_USER_WATCHLIST
- * @property {Object} user - The user object.
- * @property {Array} user.watchlist - The user's watchlist.
- * @property {string} user.watchlist._id - The ID of the watchlist item.
- * @property {Object} user.watchlist.stock - The stock object.
- * @property {string} user.watchlist.stock._id - The ID of the stock.
- * @property {string} user.watchlist.stock.ticker - The ticker symbol of the stock.
+ * @typedef {Object} Watchlist
+ * @property {string} _id - The unique identifier of the watchlist.
+ * @property {string} name - The name of the watchlist.
+ *
+ * @param {string} user - The ID of the user to retrieve watchlists for.
+ * @returns {Object} The watchlists for the specified user.
  */
 export const QUERY_USER_WATCHLIST = gql`
-	query User($username: String!) {
-		user(username: $username) {
-			watchlist {
-				_id
-				symbol
-				name
-			}
+	query QUERY_USER_WATCHLISTS($user: ID!) {
+		watchlists(user: $user) {
+			_id
+			name
 		}
 	}
 `;
@@ -87,6 +83,58 @@ export const QUERY_USER_INITIAL_FUNDING = gql`
 	query User($username: String!) {
 		user(username: $username) {
 			initialFunding
+		}
+	}
+`;
+
+/**
+ * A GraphQL query to retrieve the stocks in a user's watchlist.
+ *
+ * @typedef {Object} QUERY_WATCHLIST_STOCKS
+ * @property {string} id - The ID of the user's watchlist.
+ * @property {Object[]} watchlist - The user's watchlist.
+ * @property {Object[]} watchlist.stocks - The stocks in the user's watchlist.
+ * @property {string} watchlist.stocks._id - The ID of the stock.
+ */
+export const QUERY_WATCHLIST_STOCKS = gql`
+	query QUERY_WATCHLIST_STOCKS($id: ID!) {
+		watchlist(_id: $id) {
+			stocks {
+				_id
+			}
+		}
+	}
+`;
+
+/**
+ * A GraphQL query to get the symbol of a stock by its ID.
+ *
+ * @typedef {Object} QUERY_STOCK
+ * @property {string} QUERY_STOCK.symbol - The symbol of the stock.
+ *
+ * @param {string} id - The ID of the stock to query.
+ * @returns {Object} The result of the GraphQL query.
+ */
+export const QUERY_STOCK = gql`
+	query QUERY_STOCK($id: ID!) {
+		stock(_id: $id) {
+			symbol
+		}
+	}
+`;
+
+/**
+ * A GraphQL query to fetch all stocks from the server.
+ *
+ * @typedef {Object} QUERY_STOCKS
+ * @property {Array} stocks - An array of stock objects containing their _id, symbol, and name.
+ */
+export const QUERY_STOCKS = gql`
+	query QUERY_STOCKS {
+		stocks {
+			_id
+			symbol
+			name
 		}
 	}
 `;

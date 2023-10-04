@@ -8,17 +8,13 @@ import PositionCards from "../../components/PositionCards";
 import WatchlistCards from "../../components/WatchlistCards";
 import Auth from "../../utils/auth";
 import { useQuery } from "@apollo/client";
-import { QUERY_USER_POSITIONS } from "../../utils/queries";
-import { QUERY_USER_INITIAL_FUNDING } from "../../utils/queries";
+import {
+	QUERY_USER_POSITIONS,
+	QUERY_USER_WATCHLIST,
+	QUERY_USER_INITIAL_FUNDING,
+	QUERY_WATCHLIST_STOCKS
+} from "../../utils/queries";
 import { useRef } from "react";
-
-// TODO: Remove this example watchlist
-const exampleWatchlist = [
-	{ symbol: "AAPL" },
-	{ symbol: "MSFT" },
-	{ symbol: "GOOG" },
-	{ symbol: "AMZN" }
-];
 
 /**
  * Renders a single metric for the portfolio overview.
@@ -98,6 +94,20 @@ const calculatePortfolioMetricsData = (initialFunding, positions) => {
 const PortfolioOverview = () => {
 	const theme = useTheme();
 	const positions = [];
+
+	// const { watchlistsLoading, data: watchlistsData } = useQuery(
+	// 	QUERY_USER_WATCHLIST,
+	// 	{
+	// 		variables: { user: Auth.getProfile().data._id }
+	// 	}
+	// );
+
+	// const { watchlistLoading, data: watchlistData } = useQuery(
+	// 	QUERY_WATCHLIST_STOCKS,
+	// 	{
+	// 		variables: { id: watchlistsData.watchlists[0]._id }
+	// 	}
+	// );
 
 	const { initialFundingLoading, data: initialFundingData } = useQuery(
 		QUERY_USER_INITIAL_FUNDING,
@@ -268,7 +278,7 @@ const PortfolioOverview = () => {
 				variants={coverItem}
 			>
 				<Typography variant="h4">Watchlist</Typography>
-				<WatchlistCards watchlist={exampleWatchlist} />
+				{/* <WatchlistCards watchlist={watchlistData} /> */}
 			</Grid>
 		</Grid>
 	);

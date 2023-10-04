@@ -1,6 +1,11 @@
 const { Schema, model } = require('mongoose');
 
 const watchlistSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
     stocks: [
         {
             type: Schema.Types.ObjectId,
@@ -9,7 +14,8 @@ const watchlistSchema = new Schema({
     ],
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     }
 });
 

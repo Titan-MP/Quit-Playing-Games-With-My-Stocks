@@ -4,11 +4,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
 import { useMutation } from "@apollo/client";
-import { ADD_USER } from "../../utils/mutations";
+import { ADD_USER, ADD_WATCHLIST } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 
 const SignupForm = ({ onFormUpdate }) => {
 	const [addUser, { error, data }] = useMutation(ADD_USER);
+	const [addWatchlist] = useMutation(ADD_WATCHLIST);
 	const defaultFundingValue = 100000;
 
 	const userSchema = yup.object({
@@ -24,6 +25,7 @@ const SignupForm = ({ onFormUpdate }) => {
 		validationSchema: userSchema,
 		onSubmit: async (values) => {
 			try {
+				// Add user to database
 				const { data } = await addUser({
 					variables: {
 						username: values.username,
@@ -31,6 +33,14 @@ const SignupForm = ({ onFormUpdate }) => {
 						initialFunding: defaultFundingValue
 					}
 				});
+				// Add default watchlist to database
+				await addWatchlist({
+					variables: {
+						user: data.addUser.user._id,
+						name: data.addUser.user.username + "'s Watchlist"
+					}
+				});
+
 				Auth.login(data.addUser.token);
 			} catch (e) {
 				console.error("Error Creating Account: " + e);

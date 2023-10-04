@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useTransform } from "framer-motion";
 
 const CircularProgress = ({ progress }) => {
 	const circleLength = useTransform(progress, [0, 100], [0, 1]);

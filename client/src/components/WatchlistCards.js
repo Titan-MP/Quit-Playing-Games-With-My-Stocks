@@ -12,9 +12,7 @@ const WatchlistCard = ({ stock }) => {
 				animate={{ opacity: 1, y: 0 }}
 				exit={{ opacity: 0, y: -50 }}
 			>
-				<Grid
-					xs="auto"
-				>
+				<Grid xs="auto">
 					<Chip
 						label={
 							<Typography variant="body1">
@@ -32,14 +30,18 @@ const WatchlistCard = ({ stock }) => {
 };
 
 const WatchlistCards = ({ watchlist }) => {
+	if (!watchlist.stocks || watchlist.stocks.length === 0) {
+		return null;
+	}
+
 	/**
 	 * Returns an array of unique stocks from the watchlist array based on their symbol property.
 	 * @param {Array} watchlist - An array of stock objects.
 	 * @returns {Array} - An array of unique stock objects based on their symbol property.
 	 */
 	const uniqueWatchlist = Array.from(
-		new Set(watchlist.map((stock) => stock.symbol))
-	).map((symbol) => watchlist.find((stock) => stock.symbol === symbol));
+		new Set(watchlist.stocks.map((stock) => stock.symbol))
+	).map((symbol) => watchlist.stocks.find((stock) => stock.symbol === symbol));
 
 	/**
 	 * Sorts the uniqueWatchlist array in alphabetical order based on the symbol property of each object.

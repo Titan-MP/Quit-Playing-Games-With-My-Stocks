@@ -1,6 +1,5 @@
 import { gql } from "@apollo/client";
 
-
 /**
  * A GraphQL mutation to login a user.
  *
@@ -28,7 +27,6 @@ export const LOGIN_USER = gql`
 		}
 	}
 `;
-
 
 /**
  * Mutation to add a new user to the database.
@@ -66,7 +64,6 @@ export const ADD_USER = gql`
 	}
 `;
 
-
 /**
  * Mutation to add a new position for a user
  * @typedef {Object} Position
@@ -98,38 +95,35 @@ export const ADD_POSITION = gql`
 	}
 `;
 
-
 /**
  * Mutation to add a stock to the database.
  * @param {string} ticker - The ticker symbol of the stock to add.
  * @returns {object} - The _id and ticker of the added stock.
  */
 export const ADD_STOCK = gql`
-	mutation addStock($ticker: String!) {
-		addStock(ticker: $ticker) {
+	mutation ADD_STOCK($symbol: String!, $name: String!) {
+		addStock(symbol: $symbol, name: $name) {
 			_id
-			ticker
-		}
-	}
-`;
-
-
-/**
- * Mutation to add a watchlist with a given name.
- * @mutation
- * @typedef {Object} ADD_WATCHLIST
- * @property {String} name - The name of the watchlist to be added.
- * @property {String} _id - The unique identifier of the added watchlist.
- */
-export const ADD_WATCHLIST = gql`
-	mutation addWatchlist($name: String!) {
-		addWatchlist(name: $name) {
-			_id
+			symbol
 			name
 		}
 	}
 `;
 
+/**
+ * Mutation to add a new watchlist for a user
+ * @param {string} user - The ID of the user adding the watchlist
+ * @param {string} name - The name of the watchlist being added
+ * @returns {object} - The ID and name of the newly added watchlist
+ */
+export const ADD_WATCHLIST = gql`
+	mutation ADD_WATCHLIST($user: ID!, $name: String!) {
+		addWatchlist(user: $user, name: $name) {
+			_id
+			name
+		}
+	}
+`;
 
 /**
  * Removes a position from the database.
@@ -154,7 +148,6 @@ export const REMOVE_POSITION = gql`
 	}
 `;
 
-
 /**
  * Removes a stock from the database.
  * @mutation
@@ -170,7 +163,6 @@ export const REMOVE_STOCK = gql`
 	}
 `;
 
-
 /**
  * Removes a watchlist from the database.
  *
@@ -185,7 +177,6 @@ export const REMOVE_WATCHLIST = gql`
 		}
 	}
 `;
-
 
 /**
  * Mutation to add a stock to a watchlist
@@ -205,7 +196,6 @@ export const ADD_STOCK_TO_WATCHLIST = gql`
 		}
 	}
 `;
-
 
 /**
  * Removes a stock from a watchlist.
@@ -235,7 +225,6 @@ export const REMOVE_STOCK_FROM_WATCHLIST = gql`
 		}
 	}
 `;
-
 
 /**
  * Mutation to update a position in the database.
@@ -272,7 +261,6 @@ export const UPDATE_POSITION = gql`
 	}
 `;
 
-
 /**
  * Mutation to update a stock's ticker by its ID.
  * @mutation
@@ -292,7 +280,6 @@ export const UPDATE_STOCK = gql`
 	}
 `;
 
-
 /**
  * Mutation to update a watchlist's name
  * @typedef {Object} gql
@@ -310,7 +297,6 @@ export const UPDATE_WATCHLIST = gql`
 	}
 `;
 
-
 /**
  * Mutation to update user's amount.
  * @typedef {Object} gql
@@ -326,7 +312,6 @@ export const UPDATE_USER = gql`
 		}
 	}
 `;
-
 
 /**
  * Mutation to update user password.
@@ -345,7 +330,6 @@ export const UPDATE_USER_PASSWORD = gql`
 	}
 `;
 
-
 /**
  * Mutation to update user's username
  * @typedef {Object} MutationUpdateUserUsername
@@ -362,7 +346,6 @@ export const UPDATE_USER_USERNAME = gql`
 		}
 	}
 `;
-
 
 /**
  * Mutation to update user watchlists
@@ -389,7 +372,6 @@ export const UPDATE_USER_WATCHLISTS = gql`
 		}
 	}
 `;
-
 
 /**
  * Mutation to update the stocks in a watchlist.

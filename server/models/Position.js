@@ -3,7 +3,6 @@ const { Schema, model } = require("mongoose");
 const positionSchema = new Schema({
 	stock: {
 		type: Schema.Types.ObjectId,
-		ref: "Stock"
 	},
 	price: {
 		type: Number,
@@ -15,7 +14,8 @@ const positionSchema = new Schema({
 	},
 	user: {
 		type: Schema.Types.ObjectId,
-		ref: "User"
+		ref: "User",
+		required: true
 	}
 });
 
