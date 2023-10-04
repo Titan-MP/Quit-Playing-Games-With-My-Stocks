@@ -67,16 +67,16 @@ You will be able to search and watchlist your favorite tickers/symbols.
 
    Welcome Page
     
-   ```md 
+
 ![Welcome1](./client/src/assets/images/Welcome.png)
 ![Welcome2](./client/src/assets/images/Welcome2.png)
-```
+
 
    Dashboard
     
-   ```md 
+
 ![dashboard](./client/src/assets/images/Dashboard.png)
-```
+
 
 ## Credits
 
