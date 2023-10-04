@@ -66,8 +66,8 @@ You will be able to search and watchlist your favorite tickers/symbols.
 ## Screenshots
     Welcome Page
    ```md 
-![Welcome1](assets/images/Welcome.PNG)
-![Welcome2](assets/images/Welcome2.PNG)
+![Welcome1](client/src/assets/images/Welcome.PNG)
+![Welcome2](client/src/assets/images/Welcome2.PNG)
 ```
 
     Dashboard
