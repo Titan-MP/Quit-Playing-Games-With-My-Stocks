@@ -64,15 +64,18 @@ You will be able to search and watchlist your favorite tickers/symbols.
 
 
 ## Screenshots
-    Welcome Page
+
+   Welcome Page
+    
    ```md 
-![Welcome1](client/src/assets/images/Welcome.PNG)
-![Welcome2](client/src/assets/images/Welcome2.PNG)
+![Welcome1](./client/src/assets/images/Welcome.png)
+![Welcome2](./client/src/assets/images/Welcome2.png)
 ```
 
-    Dashboard
+   Dashboard
+    
    ```md 
-![dashboard](assets/images/Dashboard.PNG)
+![dashboard](./client/src/assets/images/Dashboard.png)
 ```
 
 ## Credits
