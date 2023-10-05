@@ -91,7 +91,7 @@ const PortfolioOverview = () => {
 	const { positionsLoading, data: positionsData } = useQuery(
 		QUERY_USER_POSITIONS,
 		{
-			variables: { username: Auth.getProfile().data.username }
+			variables: { username: Auth.getProfile().data._id }
 		}
 	);
 
@@ -163,8 +163,8 @@ const PortfolioOverview = () => {
 			>
 				<Grid
 					container
-					spacing={2}
 					direction="column"
+					sx={{ gap: 5 }} // Add gap property to set spacing between child components
 				>
 					<PortfolioOverviewMetrics
 						metricName={"Net Liquidation"}
@@ -200,20 +200,17 @@ const PortfolioOverview = () => {
 							"Jul",
 							"Aug",
 							"Sep",
-							"Oct",
-							"Nov",
-							"Dec"
 						],
 						netLiqValue: [
-							101000, 103000, 106000, 110000, 115000, 121000,
+							106000, 110000, 115000, 121000,
 							128000, 136000, 145000, 155000, 150000, 144000
 						],
 						profitLoss: [
-							1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000,
+							3000, 4000, 5000, 6000, 7000, 8000,
 							9000, 10000, -5000, -6000
 						]
 					}}
-					height={"600px"}
+					height={"500px"}
 				/>
 			</Grid>
 			<Grid
@@ -229,7 +226,7 @@ const PortfolioOverview = () => {
 							{ value: 30000, name: "Allocated Funds" }
 						]
 					}}
-					height={"600px"}
+					height={"500px"}
 				/>
 			</Grid>
 			<Grid

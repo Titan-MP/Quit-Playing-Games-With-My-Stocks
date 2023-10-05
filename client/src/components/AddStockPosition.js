@@ -19,6 +19,10 @@ import {
 import Auth from "../utils/auth";
 import { useFormik } from "formik";
 
+/**
+ * Renders a form to add a new stock position to the user's watchlist
+ * @returns {JSX.Element} The AddStockPosition component
+ */
 function AddStockPosition() {
     const [open, setOpen] = useState(false);
     const [symbol, setSymbol] = useState("");
@@ -75,33 +79,32 @@ function AddStockPosition() {
     };
 
     const handleAdd = (values) => {
+		// Use the filteredStocks array to find the stock object that matches the symbol
+		const stock = filteredStocks.find(
+			(stock) => stock.symbol === values.symbol
+		);
 
-        // Use the filteredStocks array to find the stock object that matches the symbol
-        const stock = filteredStocks.find(
-            (stock) => stock.symbol === values.symbol
-        );
+		// Add position to the database within a try/catch block
+		try {
+			addPosition({
+				variables: {
+					user: Auth.getProfile().data._id,
+					stock: stock._id,
+					price: parseFloat(values.price),
+					quantity: parseInt(values.quantity)
+				}
+			});
+		} catch (err) {
+			console.error(err);
+		}
 
-        // Add position to the database within a try/catch block
-        try {
-            addPosition({
-                variables: {
-                    user: Auth.getProfile().data._id,
-                    stock: stock._id,
-                    price: parseFloat(values.price),
-                    quantity: parseInt(values.quantity)
-                }
-            });
-        } catch (err) {
-            console.error(err);
-        }
-
-        // Clear the form fields
-        setSymbol("");
-        setQuantity("");
-        setPrice("");
-        // Close the dialog box
-        handleClose();
-    };
+		// Clear the form fields
+		setSymbol("");
+		setQuantity("");
+		setPrice("");
+		// Close the dialog box
+		handleClose();
+	};
 
     if (!filteredStocks) {
         return null;

@@ -21,7 +21,7 @@ const PortfolioOverviewMetrics = ({ metricName, metricData }) => {
 				{metricName}
 			</Typography>
 			<Typography
-				fontSize={theme.typography.h4.fontSize}
+				fontSize={theme.typography.h3.fontSize}
 				fontWeight="100"
 			>
 				{metricData}

@@ -8,7 +8,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_USER_WATCHLIST } from "../../utils/queries";
 import Auth from "../../utils/auth";
 
-const WatchlistHeading = ({ watchlistName, refetchWatchlist }) => {
+const WatchlistHeading = ({ watchlistName }) => {
 	return (
 		<Grid
 			container
@@ -30,7 +30,7 @@ const WatchlistHeading = ({ watchlistName, refetchWatchlist }) => {
 };
 
 const WatchlistSection = () => {
-	const { data: userWatchlists, refetch } = useQuery(QUERY_USER_WATCHLIST, {
+	const { data: userWatchlists } = useQuery(QUERY_USER_WATCHLIST, {
 		variables: { user: Auth.getProfile().data._id }
 	});
 
@@ -47,7 +47,6 @@ const WatchlistSection = () => {
 		<React.Fragment>
 			<WatchlistHeading
 				watchlistName={userWatchlists?.watchlists[0]?.name}
-				refetchWatchlist={refetch}
 			/>
 			{watchlistStocks.length > 0 && (
 				<WatchlistCards watchlist={userWatchlists.watchlists[0]} />

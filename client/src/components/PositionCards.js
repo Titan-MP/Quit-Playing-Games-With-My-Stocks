@@ -16,7 +16,7 @@ echarts.use([GridComponent, TooltipComponent, LineChart, CanvasRenderer]);
 
 const PositionCard = ({ position }) => {
 	const theme = useTheme();
-	const [chartVisibiltiy, setChartVisibility] = useState(true);
+	const [chartVisibility, setChartVisibility] = useState(true);
 	const { loading, data: stockData } = useQuery(QUERY_STOCK, {
 		variables: { id: position.stock._id }
 	});
@@ -61,10 +61,12 @@ const PositionCard = ({ position }) => {
 						flex: "1 0 auto"
 					}}
 				>
-					<PositionMetric
-						metricName={"Ticker"}
-						metricData={stockData.stock.symbol}
-					/>
+					{stockData && (
+						<PositionMetric
+							metricName={"Ticker"}
+							metricData={stockData.stock.symbol}
+						/>
+					)}
 					<PositionMetric
 						metricName={"Purchase Price"}
 						metricData={position.price}
@@ -80,33 +82,36 @@ const PositionCard = ({ position }) => {
 						width: "100%"
 					}}
 				>
-					<ReactECharts
-						option={{
-							grid: {
-								left: "3%",
-								right: "4%",
-								bottom: "3%",
-								containLabel: true
-							},
-							tooltip: {
-								trigger: "axis"
-							},
-							xAxis: {
-								type: "category",
-								data: position.threeMonthDates
-							},
-							yAxis: {
-								type: "value"
-							},
-							series: [
-								{
-									data: position.threeMonthPrices,
-									type: "line",
-									areaStyle: {}
-								}
-							]
-						}}
-					/>
+					{stockData && chartVisibility && (
+						<ReactECharts
+							option={{
+								grid: {
+									left: "3%",
+									right: "4%",
+									bottom: "3%",
+									containLabel: true
+								},
+								tooltip: {
+									trigger: "axis"
+								},
+								xAxis: {
+									type: "category",
+									data: ["Jul", "Aug", "Sep"]
+								},
+								yAxis: {
+									type: "value"
+								},
+								series: [
+									{
+										data: [100.0, 60.0, 150.0],
+										type: "line",
+										areaStyle: {},
+										smooth: true
+									}
+								]
+							}}
+						/>
+					)}
 				</CardMedia>
 			</Card>
 		</Grid>
@@ -119,12 +124,15 @@ const PositionCards = ({ positions }) => {
 			container
 			spacing={2}
 		>
-			{positions && positions.map((position, index) => (
-				<PositionCard
-					key={index}
-					position={position}
-				/>
-			))}
+			{positions &&
+				positions.map((position, index) => {
+					return (
+						<PositionCard
+							key={index}
+							position={position}
+						/>
+					);
+				})}
 		</Grid>
 	);
 };

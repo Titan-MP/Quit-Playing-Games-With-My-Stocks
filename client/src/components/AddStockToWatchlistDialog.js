@@ -49,8 +49,6 @@ const AddStockToWatchlistDialog = () => {
 				}
 			});
 
-			console.log(newStock);
-
 			await addStockToWatchlist({
 				variables: {
 					watchlistId: watchlistsData.watchlists[0]._id,
