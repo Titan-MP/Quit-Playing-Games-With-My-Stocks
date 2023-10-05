@@ -16,8 +16,12 @@ echarts.use([
 	LabelLayout
 ]);
 
-const BuyingPowerPieChart = ({ datasets }) => {
+const BuyingPowerPieChart = ({ datasets, height }) => {
 	const theme = useTheme();
+
+	const chartStyle = {
+		height: height
+	};
 
 	const options = {
 		title: {
@@ -29,13 +33,6 @@ const BuyingPowerPieChart = ({ datasets }) => {
 		},
 		tooltip: {
 			trigger: "item"
-		},
-		legend: {
-			top: "5%",
-			right: "right",
-            textStyle: {
-                color: theme.palette.text.primary
-            }
 		},
 		series: [
 			{
@@ -61,7 +58,7 @@ const BuyingPowerPieChart = ({ datasets }) => {
 		]
 	};
 
-	return <ReactECharts option={options} />;
+	return <ReactECharts option={options} style={chartStyle} />;
 };
 
 export default BuyingPowerPieChart;

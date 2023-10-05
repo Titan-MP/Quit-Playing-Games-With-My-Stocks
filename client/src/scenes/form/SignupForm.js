@@ -1,28 +1,25 @@
-                                                                /* =================== IMPORTS ======================= */
 import React from "react";
 import { Box, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import { useMutation } from "@apollo/client";
-import { ADD_USER } from "../../utils/mutations";
+import {
+	ADD_USER,
+	ADD_WATCHLIST
+} from "../../utils/mutations";
 import Auth from "../../utils/auth";
 
+const SignupForm = ({ onFormUpdate }) => {
+	const [addUser, { error, data }] = useMutation(ADD_USER);
+	const [addWatchlist] = useMutation(ADD_WATCHLIST);
+	const defaultFundingValue = 100000;
 
-                                                                /* ==================== COMPONENTS ==================== */
-
-                                                                /* -------------------- SIGNUP FORM ------------------- */
-const SignupForm = ({ formValid, onFormUpdate }) => {
-	const [addUser, {error, data}] = useMutation(ADD_USER);
-
-																/* ---------- Formik and Yup Configurations ----------- */
-																/* Schema for yup validation                            */
 	const userSchema = yup.object({
 		username: yup.string().required("Username is required"),
 		password: yup.string().required("Password is required")
 	});
 
-																/* Formik initialization                       			*/
 	const formik = useFormik({
 		initialValues: {
 			username: "",
@@ -31,13 +28,23 @@ const SignupForm = ({ formValid, onFormUpdate }) => {
 		validationSchema: userSchema,
 		onSubmit: async (values) => {
 			try {
+				// Add user to database
 				const { data } = await addUser({
 					variables: {
 						username: values.username,
 						password: values.password,
-						amount: 5000
+						initialFunding: defaultFundingValue
 					}
 				});
+
+				// Add default watchlist to database
+				const { data: newWatchlist } = await addWatchlist({
+					variables: {
+						user: data.addUser.user._id,
+						name: data.addUser.user.username + "'s Watchlist"
+					}
+				});
+
 				Auth.login(data.addUser.token);
 			} catch (e) {
 				console.error("Error Creating Account: " + e);
@@ -51,7 +58,13 @@ const SignupForm = ({ formValid, onFormUpdate }) => {
 			sx={{
 				display: "flex",
 				flexDirection: "column",
-				alignItems: "center"
+				justifyContent: "center",
+				alignItems: "center",
+				textAlign: "center",
+				paddingTop: "30px",
+				paddingBottom: "30px",
+				paddingLeft: "50px",
+				paddingRight: "50px"
 			}}
 		>
 			<Typography
@@ -61,7 +74,12 @@ const SignupForm = ({ formValid, onFormUpdate }) => {
 			>
 				Sign Up for an Account
 			</Typography>
-			<form onSubmit={(event) => {event.preventDefault(); formik.handleSubmit()}}>
+			<form
+				onSubmit={(event) => {
+					event.preventDefault();
+					formik.handleSubmit();
+				}}
+			>
 				<TextField
 					margin="dense"
 					id="username"
@@ -100,14 +118,15 @@ const SignupForm = ({ formValid, onFormUpdate }) => {
 					type="submit"
 					variant="contained"
 					fullWidth
+					sx={{ marginTop: "20px", marginBottom: "20px" }}
 				>
 					<Typography variant="body1">Create Account</Typography>
 				</Button>
+				{error && <Typography>Error: {error.message}</Typography>}
+				{data && <Typography>Welcome to MockTrade!</Typography>}
 			</form>
 		</Box>
 	);
 };
 
-
-                                                                /* ===================== EXPORTS ====================== */
 export default SignupForm;

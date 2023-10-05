@@ -1,8 +1,9 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import FeatureInsightSection from "./FeatureInsightSection";
 import { MockTradeLogoSVG } from "../../assets/images";
+import Topbar from "../global/Topbar";
 
 const WelcomePage = () => {
 	const welcomeContainer = {
@@ -23,42 +24,44 @@ const WelcomePage = () => {
 	};
 
 	return (
-		<Grid
-			height={"100vh"}
-			container
-			spacing={2}
-			sx={{
-				paddingTop: "5vh",
-				paddingBottom: "5vh"
-			}}
-		>
+		<Stack>
+			<Topbar />
 			<Grid
-				item
-				xs={12}
+				height={"100vh"}
+				container
+				spacing={2}
 				sx={{
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "center",
-					alignItems: "center",
-					height: "75vh"
+					paddingTop: "5vh",
+					paddingBottom: "5vh"
 				}}
 			>
-				<MockTradeLogoSVG />
-				<Typography
+				<Grid
+					xs={12}
 					sx={{
-						fontSize: "6rem"
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "center",
+						alignItems: "center",
+						height: "75vh"
 					}}
 				>
-					MockTrade
-				</Typography>
-				<Typography variant="h5">
-					Your Personal Portfolio Simulator
-				</Typography>
+					<MockTradeLogoSVG />
+					<Typography
+						sx={{
+							fontSize: "6rem"
+						}}
+					>
+						MockTrade
+					</Typography>
+					<Typography variant="h5">
+						Your Personal Portfolio Simulator
+					</Typography>
+				</Grid>
+				<FeatureInsightSection
+					motionVariants={[welcomeContainer, welcomeItem]}
+				/>
 			</Grid>
-			<FeatureInsightSection
-				motionVariants={[welcomeContainer, welcomeItem]}
-			/>
-		</Grid>
+		</Stack>
 	);
 };
 
